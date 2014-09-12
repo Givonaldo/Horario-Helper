@@ -1,0 +1,434 @@
+#######################
+######## CURSO ########
+#######################
+
+
+# 1. Adicionar
+
+expecterror "Atributo inválido" addCurso sigla="" nome="Tecnólogo em Construção de Edifícios"
+expecterror "Atributo inválido" addCurso sigla="" nome="Análise e Desenvolvimento de Sistemas"
+expecterror "Atributo inválido" addCurso sigla="ADS" nome=""
+expecterror "Atributo inválido" addCurso sigla="TCE" nome=
+
+addCurso sigla="ADS" nome="Análise e Desenvolvimento de Sistemas"
+addCurso sigla="TCE" nome="Tecnólogo em Construção de Edifícios"
+addCurso sigla="TT" nome="Teste Teste"
+addCurso sigla="CS" nome="Counter Strike"
+
+# 2. Alterar
+
+expecterror "Atributo inválido" alterarCurso identificadora="" atributo="DASDAS"
+expecterror "Atributo inválido" alterarCurso identificador= atributo="sigla"
+expecterror "Atributo inválido" alterarCurso identificador="CS" atributo=""
+expecterror "Atributo inválido" alterarCurso identificador="TCE" atributo=""
+expecterror "Atributo inválido" alterarCurso identificador="ADS" atributo=
+expecterror "Atributo inválido" alterarCurso identificador= atributo="D"
+
+#expecterror "Atributo inválido" alterarCurso identificador="TT" atributo="sigla"
+#expecterror "Atributo inválido" alterarCurso identificador="CS" atributo="nomes"
+#expecterror "Atributo inválido" alterarCurso identificador="CS" atributo="no_me"
+
+
+expecterror "Curso não cadastrado" alterarCurso identificador="CC" atributo="D"
+expecterror "Curso não cadastrado" alterarCurso identificador="TC_E" atributo="D"
+expecterror "Curso não cadastrado" alterarCurso identificador="ADSS" atributo="A"
+expecterror "Curso não cadastrado" alterarCurso identificador="CSC" atributo="B"
+
+expect "ADS - Análise e Desenvolvimento de Sistemas" getCurso idCurso="ADS"
+alterarCurso identificador="ADS" novoValor="Análise e Desenv. de Sist."
+expect "ADS - Análise e Desenv. de Sist." getCurso idCurso="ADS"
+
+#expect "CS - Counter Strike" getCurso idCurso="CS"
+#alterarCurso sigla="CS" atributo="sigla" novoValor="ICS"
+#alterarCurso sigla="ICS" atributo="nome" novoValor="Introdução à Counter Strike"
+#expect "ICS - Introdução à Counter Strike" getCurso idCurso="ICS"
+
+expect "TCE - Tecnólogo em Construção de Edifícios" getCurso idCurso="TCE"
+alterarCurso identificador="TCE" novoValor="Tec. em Const. de Edif."
+expect "TCE - Tec. em Const. de Edif." getCurso idCurso="TCE"
+
+alterarCurso sigla="TCE" novoValor="Tecnólogo em Construção de Edifícios"
+alterarCurso sigla="ADS" novoValor="Análise e Desenvolvimento de Sistemas"
+
+
+
+# 3. Remover
+
+removeCurso identificador="CS"
+
+expecterror "Atributo inválido" removeCurso nome=""
+expecterror "Atributo inválido" removeCurso nome=
+
+expecterror "Curso não cadastrado" removeCurso idCurso="TC_E"
+expecterror "Curso não cadastrado" removeCurso idCurso="AD_S"
+expecterror "Curso não cadastrado" removeCurso idCurso="I.CS"
+expecterror "Curso não cadastrado" removeCurso idCurso="ADSS"
+expecterror "Curso não cadastrado" removeCurso idCurso="ICCS"
+expecterror "Curso não cadastrado" removeCurso idCurso="TTT"
+
+removeCurso identificador="TT"
+expecterror "Curso não cadastrado" removeCurso idCurso="TT"
+
+#removeCurso nome="ICS"
+expecterror "Curso não cadastrado" removeCurso nome="ICS"
+
+
+
+# 4. Recuperando Arquivos
+
+expecterror "Atributo inválido" getCurso idCurso=""
+expecterror "Atributo inválido" getCurso idCurso=
+
+expecterror "Curso não cadastrado" getCurso idCurso="TT"
+expecterror "Curso não cadastrado" getCurso idCurso="ICS"
+expecterror "Curso não cadastrado" getCurso idCurso="AD_S"
+expecterror "Curso não cadastrado" getCurso idCurso="ADSS"
+expecterror "Curso não cadastrado" getCurso idCurso="TCCE"
+
+expect "ADS - Análise e Desenvolvimento de Sistemas" getCurso idCurso="ADS"
+expect "TCE - Tecnólogo em Construção de Edifícios" getCurso idCurso="TCE"
+
+
+
+#######################
+###### PROFESSOR ######
+#######################
+
+
+# 1. Adicionar
+
+expecterror "Atributo inválido" addProfessor idProfessor="12324" nome=""
+expecterror "Atributo inválido" addProfessor idProfessor= nome=
+expecterror "Atributo inválido" addProfessor idProfessor="34534" nome=""
+expecterror "Atributo inválido" addProfessor idProfessor="" nome=
+
+addProfessor idProfessor="12324" nome="Mirna Maia"
+addProfessor idProfessor="9999" nome="Hugo"
+addProfessor idProfessor="444" nome="Bruno Luna"
+addProfessor idProfessor="333" nome="Maria José"
+addProfessor idProfessor="111" nome="José"
+addProfessor idProfessor="222" nome="Marcela"
+
+expecterror "Professor já cadastrado" addProfessor idProfessor="12324" nome="Mirna Maia"
+expecterror "Professor já cadastrado" addProfessor idProfessor="9999" nome="Hugo"
+
+
+
+
+# 2. Alterar
+
+
+expecterror "Atributo inválido" alteraProfessor idProfessor="" novoNome="Jeferson"
+expecterror "Atributo inválido" alteraProfessor idProfessor="" novoNome="Solange"
+expecterror "Atributo inválido" alteraProfessor idProfessor= novoNome="José"
+expecterror "Atributo inválido" alteraProfessor idProfessor="111" novoNome=""
+expecterror "Atributo inválido" alteraProfessor idProfessor="111" novoNome=
+expecterror "Atributo inválido" alteraProfessor idProfessor="111" novoNome=""
+expecterror "Atributo inválido" alteraProfessor idProfessor= novoNomer="José"
+expecterror "Atributo inválido" alteraProfessor idProfessor="444" novoNome="&&()askdnnl"
+expecterror "Atributo inválido" alteraProfessor idProfessor="333" novoNome=
+
+
+# 3. Remover
+
+expecterror "Professor não Cadastrado" removeProfessor idProfessor="12345"
+expecterror "Professor não Cadastrado" removeProfessor idProfessor="99778"
+
+removeProfessor idProfessor="444"
+removeProfessor idProfessor="333"
+expecterror "Professor não Cadastrado" removeProfessor idProfessor="333"
+expecterror "Professor não Cadastrado" removeProfessor idProfessor="444"
+
+
+
+# 4. Recuperar arquivos
+
+expecterror "Atributo inválido" getProfessor idProfessor=""
+expecterror "Atributo inválido" getProfessor idProfessor=
+#expecterror "Professor não cadastrado" getProfessor matricula="3333"
+#expecterror "Professor não cadastrado" getProfessor matricula="444"
+
+expect "111 - José" getProfessor idProfessor="111"
+expect "222 - Marcela" getProfessor idProfessor="222"
+
+removeProfessor idProfessor="111"
+expecterror "Professor não cadastrado" getProfessor idProfessor="111"
+
+addProfessor idProfessor="1234" nome="Mirna Maia"
+expect "1234 - Mirna Maia" getProfessor idProfessor="1234"
+
+
+
+#######################
+######## SALA #########
+#######################
+
+
+# 1. Adicionar
+
+expecterror "Atributo inválido" addSala nome="" bloco="D"
+expecterror "Atributo inválido" addSala nome= bloco="C"
+expecterror "Atributo inválido" addSala nome="Sala 12" bloco=""
+expecterror "Atributo inválido" addSala nome="Laboratório de Manutenção" bloco=
+
+addSala nome="Sala_1" bloco="D"
+addSala nome="Laboratório de Manutenção" bloco="D"
+addSala nome="Sala_9" bloco="D"
+addSala nome="Sala_5" bloco="A"
+addSala nome="Sala_3" bloco="A"
+addSala nome="Sala_7" bloco="B"
+addSala nome="Sala_8" bloco="B"
+addSala nome="Lab_1" bloco="C"
+addSala nome="Sala_4" bloco="C"
+expecterror "Sala já cadastrada" addSala nome="Sala_8" bloco="B"
+expecterror "Sala já cadastrada" addSala nome="Sala_1" bloco="D"
+expecterror "Sala já cadastrada" addSala nome="Lab_1" bloco="c"
+
+
+# 2. Alterar
+
+expecterror "Atributo inválido" alteraSala idSala="" novoBloco="D"
+expecterror "Atributo inválido" alteraSala idSala= novoBloco="Sala"
+expecterror "Atributo inválido" alteraSala idSala="Sala_1" novoBloco=""
+expecterror "Atributo inválido" alteraSala idSala="Sala_2" novoBloco=
+expecterror "Atributo inválido" alteraSala idSala="Sala_5" novoBloco=
+expecterror "Atributo inválido" alteraSala idSala="" novoBloco="Dloh"
+expecterror "Atributo inválido" alteraSala idSala="" novobloco="D"
+expecterror "Atributo inválido" alteraSala idSala= NovoBloco="D"
+
+expecterror "Sala não cadastrada" alteraSala idSala="Sala_2" novoBloco="E"
+expecterror "Sala não cadastrada" alteraSala idSala="Lab_9" novoBloco="D"
+expecterror "Sala não cadastrada" alteraSala idSala="Lab_7" novoBloco="B"
+
+alteraSala nome="Sala_9" novoBloco="D"
+expecterror "Sala não cadastrada" alteraSala nome="Lab_9" novoBloco="A"
+
+alteraSala nome="Sala_1" novoBloco="H"
+expecterror "Sala não cadastrada" alteraSala nome="Lab_8" novoBloco="A"
+
+alteraSala nome="Sala_1" novoBloco="B"
+expecterror "Sala não cadastrada" alteraSala nome="Lab_0" novoBloco="A"
+
+alteraSala nome="Sala_1" novoBloco="A"
+expecterror "Sala não cadastrada" alteraSala nome="Labo_1" novoBloco="L"
+
+
+# 3. Remover Sala.
+
+expecterror "Atributo inválido" removeSala idSala=""
+expecterror "Atributo inválido" removeSala idSala= 
+expecterror "Atributo inválido" removeSala idSala="********"
+expecterror "Atributo inválido" removeSala idSala=""
+
+expecterror "Sala não cadastrada" removeSala idSala="SSa_1"
+expecterror "Sala não cadastrada" removeSala idSala="Sala_ç"
+expecterror "Sala não cadastrada" removeSala idSala="Sala_n"
+expecterror "Sala não cadastrada" removeSala idSala="Sala_d"
+expecterror "Sala não cadastrada" removeSala idSala="Lab_8"
+
+removeSala idSala="Sala_4"
+removeSala idSala="Lab_1"
+removeSala idSala="Sala_7"
+removeSala idSala="Sala_8"
+removeSala idSala="Sala_3"
+
+
+#######################
+####### PERÍODO #######
+#######################
+
+
+# 1. Adicionar
+
+expecterror "Atributo inválido" addPeriodo nomePeriodo="" sigla="ADS"
+expecterror "Atributo inválido" addPeriodo nomePeriodo= sigla="ADS"
+expecterror "Atributo inválido" addPeriodo nomePeriodo="2012.2" sigla=""
+expecterror "Atributo inválido" addPeriodo nomePeriodo="2012.2" sigla=
+
+addPeriodo idPeriodo="2012.1" idCurso="ADS"
+addPeriodo idPeriodo="2012.2" idCurso="ADS"
+addPeriodo idPeriodo="2013.1" idCurso="ADS"
+addPeriodo idPeriodo="2013.2" idCurso="ADS"
+addPeriodo idPeriodo="2014.1" idCurso="ADS"
+
+addPeriodo idPeriodo="2012.1" sigla="TCE"
+addPeriodo idPeriodo="2013.1" sigla="TCE"
+addPeriodo idPeriodo="2014.1" sigla="TCE"
+
+
+# 3. Remover
+
+expecterror "Atributo inválido" removePeriodo idCurso="" nomePeriodo="2012.2"
+expecterror "Atributo inválido" removePeriodo idCurso= nomePeriodo="2012.2"
+expecterror "Atributo inválido" removePeriodo idCurso="ADS" nomePeriodo=""
+expecterror "Atributo inválido" removePeriodo idCurso="TCE" nomePeriodo=
+
+removePeriodo idCurso="TCE" idPeriodo="2012.1"
+removePeriodo idCurso="ADS" idPeriodo="2012.1"
+
+
+
+#######################
+##### DISCIPLINA ######
+#######################
+
+
+
+# 1. Adicionar
+
+expecterror "Atributo inválido" addDisciplinaAoPeriodo identificadorDisciplina="" nomeDisciplina="Padrões de Projeto" cargaHoraria=100 identificadorCurso="ADS" identificadorPeriodo="2013.1"
+expecterror "Atributo inválido" addDisciplinaAoPeriodo identificadorDisciplina= nomeDisciplina="Padrões de Projeto" cargaHoraria=80 identificadorCurso="ADS" identificadorPeriodo="2014.1"
+expecterror "Atributo inválido" addDisciplinaAoPeriodo identificadorDisciplina="PP" nomeDisciplina="" cargaHoraria=1 identificadorCurso="ADS" identificadorPeriodo="2015.2"
+expecterror "Atributo inválido" addDisciplinaAoPeriodo identificadorDisciplina="MAC" nomeDisciplina= cargaHoraria=90 identificadorCurso="ADS" identificadorPeriodo="2012.1"
+expecterror "Atributo inválido" addDisciplinaAoPeriodo identificadorDisciplina="MAT" nomeDisciplina="Matemática" cargaHoraria=40 identificadorCurso="TCE" identificadorPeriodo=
+expecterror "Atributo inválido" addDisciplinaAoPeriodo identificadorDisciplina="PROG" nomeDisciplina="Programação" cargaHoraria=67 identificadorCurso="ADS" identificadorPeriodo=
+expecterror "Atributo inválido" addDisciplinaAoPeriodo identificadorDisciplina="" nomeDisciplina="Padrões" cargaHoraria=900 identificadorCurso="" identificadorPeriodo="2013.2"
+expecterror "Atributo inválido" addDisciplinaAoPeriodo identificadorDisciplina="CONC" nomeDisciplina="Concreto" cargaHoraria=100 identificadorCurso= identificadorPeriodo="2016.1"
+
+
+addDisciplinaAoPeriodo identificadorDisciplina="CONC" nomeDisciplina="Concreto" cargaHoraria=100 identificadorCurso="TCE" identificadorPeriodo="2016.1"
+addDisciplinaAoPeriodo identificadorDisciplina="PP" nomeDisciplina="Padrões de Projeto" cargaHoraria=100 identificadorCurso="ADS" identificadorPeriodo="2016.1"
+addDisciplinaAoPeriodo identificadorDisciplina="MAC" nomeDisciplina="Matemática Aplicada" cargaHoraria=100 identificadorCurso="ADS" identificadorPeriodo="2013.2"
+addDisciplinaAoPeriodo identificadorDisciplina="BAC" nomeDisciplina="Banco de Dados" cargaHoraria=120 identificadorCurso="ADS" identificadorPeriodo="2013.2"
+addDisciplinaAoPeriodo identificadorDisciplina="BAN" nomeDisciplina="Banco de Dados" cargaHoraria=10 identificadorCurso="ADS" identificadorPeriodo="2014.2"
+addDisciplinaAoPeriodo identificadorDisciplina="ALG" nomeDisciplina="Algoritmo" cargaHoraria=100 identificadorCurso="ADS" identificadorPeriodo="2013.2"
+
+
+
+# 2. Alterar
+
+
+expecterror "Atributo inválido" alteraDisciplina idCurso="" sigla="ADS_PD" atributo="nome" novoValor="Processo"
+expecterror "Atributo inválido" alteraDisciplina idCurso= sigla="ADS_PD" atributo="nome" novoValor="Processo"
+expecterror "Atributo inválido" alteraDisciplina idCurso="ADS" sigla="" atributo="cargaHoraria" novoValor="Processo"
+expecterror "Atributo inválido" alteraDisciplina idCurso="ADS" sigla= atributo="nome" novoValor="Processo"
+expecterror "Atributo inválido" alteraDisciplina idCurso="ADS" sigla="ADS_PP" atributo="" novoValor="Processo"
+expecterror "Atributo inválido" alteraDisciplina idCurso="ADS" sigla="ADS_PP" atributo= novoValor="Processo"
+expecterror "Atributo inválido" alteraDisciplina idCurso= sigla="ADS_PD" atributo="nome" novoValor=""
+expecterror "Atributo inválido" alteraDisciplina idCurso="ADS" sigla="ADS_PD" atributo="nome" novoValor=
+expecterror "Atributo inválido" alteraDisciplina idCurso="ADS" sigla= atributo="noooome" novoValor="Pro Des"
+expecterror "Atributo inválido" alteraDisciplina idCurso="" sigla="ADS_PD" atributo="cargaHooooraria" novoValor="20000"
+
+#alteraDisciplina idCurso="ADS" sigla="ADS_PD" atributo="cargaHoraria" novoValor="80"
+expect "ADS - PP - Padrões de Projeto - 2016.1 - 100" getDisciplina idCurso="ADS" idDisciplina="PP" 
+
+alteraDisciplina idCurso="ADS" sigla="PP" atributo="Nome" novoValor="Processo de Desenvolvimento de Sistemas"
+expect "ADS - BAC - Banco de Dados - 2013.2 - 120" getDisciplina idCurso="ADS" idDisciplina="BAC"
+
+alteraDisciplina idCurso="ADS" sigla="MAC" atributo="Nome" novoValor="20000"
+expect "ADS - ALG - Algoritmo - 2013.2 - 100" getDisciplina idCurso="ADS" idDisciplina="ALG"
+
+alteraDisciplina idCurso="ADS" sigla="BAN" atributo="Nome" novoValor="Banco de Dados"
+expect "ADS - PP - Processo de Desenvolvimento de Sistemas - 2016.1 - 100" getDisciplina idCurso="ADS" sigla="PP"
+
+
+
+# 3. Remover
+
+expecterror "Atributo inválido" removeDisciplina idCurso="" sigla="ADS_PD"
+expecterror "Atributo inválido" removeDisciplina idCurso= sigla="ADS_PD"
+expecterror "Atributo inválido" removeDisciplina idCurso="ADS" sigla=""
+expecterror "Atributo inválido" removeDisciplina idCurso="TCE" sigla=
+
+removeDisciplina idCurso="ADS" idDisciplina="PP"
+
+expecterror "Disciplina não cadastrada" removeDisciplina idCurso="TCE" sigla="TCE_DP"
+expecterror "Disciplina não cadastrada" removeDisciplina idCurso="ADS" sigla="ADS_PDPP"
+
+
+# 4. Recuperar arquivos
+
+expecterror "Atributo inválido" getDisciplina idCurso="" sigla="ADS_PD"
+expecterror "Atributo inválido" getDisciplina idCurso= sigla="ADS_PD"
+expecterror "Atributo inválido" getDisciplina idCurso="ADS" sigla=""
+expecterror "Atributo inválido" getDisciplina idCurso="TCE" sigla=
+
+expecterror "Disciplina não cadastrada" getDisciplina idCurso="TCE" sigla="TCE_DP"
+expecterror "Disciplina não cadastrada" getDisciplina idCurso="ADS" sigla="ADS_PDDD"
+
+expect "TCE - CONC - Concreto - 2016.1 - 100" getDisciplina idCurso="TCE" sigla="CONC"
+expect "ADS - ALG - Algoritmo - 2013.2 - 100" getDisciplina idCurso="ADS" sigla="ALG"
+expect "ADS - MAC - 20000 - 2013.2 - 100" getDisciplina idCurso="ADS" sigla="MAC"
+expect "TCE - CONC - Concreto - 2016.1 - 100" getDisciplina idCurso="TCE" sigla="CONC"
+
+
+#######################
+######## TURMA ########
+#######################
+
+
+# 1. Adicionar (erro com atributo nulo ou vazio)
+
+addTurma idTurma="ll" idCurso="ADS" identificadorProfessor="353522" idDisciplina="PP" idSala="Sala_1" idPeriodo="2014.1"
+
+expecterror "Atributo inválido" addTurma idTurma="" idCurso="ADS" identificadorProfessor="353522" idDisciplina="PP" idSala="Sala_1" idPeriodo="2014.1"
+expecterror "Atributo inválido" addTurma idTurma= idCurso="ADS" identificadorProfessor="989931" idDisciplina="FFK" idSala="Lab_2" idPeriodo="2017.1"
+expecterror "Atributo inválido" addTurma idTurma="" idCurso="" identificadorProfessor="8931" idDisciplina="FFK" idSala="Lab_2" idPeriodo="2017.1"
+expecterror "Atributo inválido" addTurma idTurma= idCurso="ADS" identificadorProfessor="989931" idDisciplina="FFK" idSala="Lab_2" idPeriodo=
+expecterror "Atributo inválido" addTurma idTurma="" idCurso="ADS" identificadorProfessor="353522" idDisciplina="PP" idSala= idPeriodo="2014.1"
+expecterror "Atributo inválido" addTurma idTurma="" idCurso="ADS" identificadorProfessor= idDisciplina="PP" idSala="Sala_1" idPeriodo="2014.1"
+expecterror "Atributo inválido" addTurma idTurma= idCurso="TCE" identificadorProfessor="989931" idDisciplina= idSala="Lab_2" idPeriodo=
+expecterror "Atributo inválido" addTurma idTurma="" idCurso="ADS" identificadorProfessor="353522" idDisciplina="PP" idSala="Sala_1" idPeriodo=""
+expecterror "Atributo inválido" addTurma idTurma="" idCurso= identificadorProfessor= idDisciplina="PP" idSala="Sala_1" idPeriodo="2014.1"
+expecterror "Atributo inválido" addTurma idTurma="" idCurso="ADS" identificadorProfessor="353522" idDisciplina= idSala="Sala_1" idPeriodo="2014.1"
+expecterror "Atributo inválido" addTurma idTurma= idCurso="ADS" identificadorProfessor="8466231" idDisciplina="FFK" idSala="Lab_2" idPeriodo=
+expecterror "Atributo inválido" addTurma idTurma= idCurso= identificadorProfessor="989931" idDisciplina= idSala= idPeriodo=
+expecterror "Atributo inválido" addTurma idTurma= idCurso="TCE" identificadorProfessor="989931" idDisciplina= idSala="Lab_2" idPeriodo=""
+
+
+expecterror "Turma já cadastrada" addTurma idTurma="ll" idCurso="ADS" identificadorProfessor="353522" idDisciplina="PP" idSala="Sala_1" idPeriodo="2014.1"
+expecterror "Turma já cadastrada" addTurma idTurma="ll" idCurso="TCE" identificadorProfessor="1003922" idDisciplina="PD" idSala="Sala_7" idPeriodo="2014.2"
+expecterror "Turma já cadastrada" addTurma idTurma="ll" idCurso="ADS" identificadorProfessor="353522" idDisciplina="PP" idSala="Sala_1" idPeriodo="2015.1"
+expecterror "Turma já cadastrada" addTurma idTurma="ll" idCurso="TCE" identificadorProfessor="399992" idDisciplina="PP" idSala="Sala_1" idPeriodo="2015.2"
+expecterror "Turma já cadastrada" addTurma idTurma="ll" idCurso="TCE" identificadorProfessor="6531122" idDisciplina="PH" idSala="Sala_9" idPeriodo="2016.1"
+expecterror "Turma já cadastrada" addTurma idTurma="ll" idCurso="ADS" identificadorProfessor="353522" idDisciplina="PP" idSala="Sala_1" idPeriodo="2014.1"
+expecterror "Turma já cadastrada" addTurma idTurma="ll" idCurso="TCE" identificadorProfessor="6531122" idDisciplina="PH" idSala="Sala_9" idPeriodo="2016.1"
+expecterror "Turma já cadastrada" addTurma idTurma="ll" idCurso="ADS" identificadorProfessor="1500288" idDisciplina="PH" idSala="Sala_9" idPeriodo="2016.2"
+
+#addSala nome="12" bloco="D"
+#addDisciplinaAoPeriodo idTurma="JJ" idProfessor="4574564" idDisciplina=123 sala="Sala_1" idPeriodo="2013.1"
+#addDisciplinaAoPeriodo idTurma="JJ" idProfessor="4574564" idDisciplina=123 sala="Sala_2" idPeriodo="2013.2"
+
+
+# 2. Alterar
+
+#expecterror "Atributo inválido" alterarTurma idTurma="AAAAAAA"  atributo="Nome" novoValor=
+#expecterror "Atributo inválido" alterarTurma idTurma=  atributo="Nome" novoValor="BBB"
+#expecterror "Atributo inválido" alterarTurma idTurma="BD1"  atributo="" novoValor="BD2"
+#expecterror "Atributo inválido" alterarTurma idTurma=  atributo="" novoValor="BD2"
+#expecterror "Atributo inválido" alterarTurma idTurma="PP"  atributo="" novoValor=""
+#expecterror "Atributo inválido" alterarTurma idTurma=""  atributo="periodo" novoValor=
+
+# (alterando e recuperando os dados simultaneamente para verificar se está ocorrendo o esperado)
+
+#expect "222, ADS_BD1, 2014.1, 12_D" getTurma nomeTurma="BDI"
+#alterarTurma nomeTurma="BD1" atributo="professor" novoValor="1234"
+#expect "1234, ADS_BD1, 2014.1, 12_D" getTurma idTurma="BDI"
+
+# 3. Remover
+
+expecterror "Atributo inválido" removerTurma idTurma=""
+expecterror "Atributo inválido" removerTurma idTurma=
+
+expecterror "Turma não cadastrada" removerTurma idTurma="BD2"
+expecterror "Turma não cadastrada" removerTurma idTurma="BD3"
+expecterror "Turma não cadastrada" removerTurma idTurma="PPP"
+expecterror "Turma não cadastrada" removerTurma idTurma="PDP"
+expecterror "Turma não cadastrada" removerTurma idTurma="LLP"
+expecterror "Turma não cadastrada" removerTurma idTurma="123PP"
+expecterror "Turma não cadastrada" removerTurma idTurma="P_P"
+
+removerTurma idTurma="ll"
+expecterror "Turma não cadastrada" removerTurma idTurma="1"
+
+# 4. Recuperar Arquivos com Erro
+
+expecterror "Atributo inválido" getTurma idTurma=""
+expecterror "Atributo inválido" getTurma idTurma=
+expecterror "Turma não cadastrada" getTurma idTurma="BDF"
+expecterror "Turma não cadastrada" getTurma idTurma="BDE"
+expecterror "Turma não cadastrada" getTurma idTurma="PDP"
+expecterror "Turma não cadastrada" getTurma idTurma="ADSP"
+expecterror "Turma não cadastrada" getTurma idTurma="ADs"
+expecterror "Turma não cadastrada" getTurma idTurma="TCE"
+

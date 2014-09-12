@@ -1,0 +1,15 @@
+br.com.H2Helper.commands
+br.com.H2Helper.commands.commandCurso
+br.com.H2Helper.commands.commandDisciplina
+br.com.H2Helper.commands.commandHorario
+br.com.H2Helper.commands.commandPeriodo
+br.com.H2Helper.commands.commandProfessor
+br.com.H2Helper.commands.commandSala
+br.com.H2Helper.commands.commandTurma
+br.com.H2Helper.dados
+br.com.H2Helper.exception
+br.com.H2Helper.fabrica
+br.com.H2Helper.fachada
+br.com.H2Helper.gerenciador
+br.com.H2Helper.modelos
+br.com.H2Helper.proxy
