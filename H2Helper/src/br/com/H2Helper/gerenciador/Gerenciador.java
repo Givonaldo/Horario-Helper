@@ -292,6 +292,17 @@ public class Gerenciador {
 		
 		alteraTurma.execute(idTurma, campo, novoValor);
 	}
+	
+	/**
+	 * 
+	 * @param descricao
+	 */
+	public void setDescricaoTurma(String idTurma, String descricao) {
+		
+		dados = (Dados) persistencia.load();
+		dados.getTurmas().get(idTurma).setDescricao(descricao);
+		dados.persistencia(dados);
+	}
 
 	/**
 	 * Metodo que delega a responsabilidade de remoção de uma determinada 

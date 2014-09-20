@@ -2,7 +2,10 @@ package br.com.H2Helper.proxy;
 
 import br.com.H2Helper.dados.Dados;
 import br.com.H2Helper.dados.Persistencia;
+import br.com.H2Helper.exception.AtributoInvalidoException;
 import br.com.H2Helper.exception.H2Exception;
+import br.com.H2Helper.exception.ProfessorJaCadastradoException;
+import br.com.H2Helper.exception.ProfessorNaoCadastradoException;
 import br.com.H2Helper.gerenciador.Gerenciador;
 
 /**
@@ -55,9 +58,9 @@ public class ProxyProfessor extends ProxyAbstrato {
 			throws H2Exception {
 
 		if (idProfessor == null || nome == null || !verificaAtributo(idProfessor, nome)) {
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		} else if (verificaExistencia(idProfessor)) {
-			throw new H2Exception("Professor já cadastrado");
+			throw new ProfessorJaCadastradoException();
 		} else {
 			gerenciador.addProfessor(idProfessor, nome);
 		}
@@ -74,9 +77,9 @@ public class ProxyProfessor extends ProxyAbstrato {
 			throws H2Exception {
 
 		if (idProfessor == null || novoNome == null || !verificaAtributo(idProfessor, novoNome)) {
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(idProfessor)) {
-			throw new H2Exception("Professor não Cadastrado");
+			throw new ProfessorNaoCadastradoException();
 		}  else {
 			gerenciador.alteraProfessor(idProfessor, novoNome);
 		}
@@ -92,9 +95,9 @@ public class ProxyProfessor extends ProxyAbstrato {
 	public void removeProfessor(String matricula) throws H2Exception {
 
 		 if (matricula == null || !verificaNuloOuVazio(matricula)) {
-			 throw new H2Exception("Atributo inválido");
+			 throw new AtributoInvalidoException();
 		 }else if (!verificaExistencia(matricula)) {
-			throw new H2Exception("Professor não Cadastrado");
+			throw new ProfessorNaoCadastradoException();
 		}
 		 gerenciador.removeProfessor(matricula);
 	}
@@ -110,9 +113,9 @@ public class ProxyProfessor extends ProxyAbstrato {
 	public String getProfessor(String identificador) throws H2Exception {
 		
 		if (identificador == null || !verificaNuloOuVazio(identificador)) {
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		} else if (!verificaExistencia(identificador)) {
-			throw new H2Exception("Professor não cadastrado");
+			throw new ProfessorNaoCadastradoException();
 		}
 		return gerenciador.getProfessor(identificador);
 	}

@@ -45,7 +45,7 @@ public class Persistencia {
 
 		try {
 			FileOutputStream os = new FileOutputStream(
-					Constantes.ARQUIVO_UNICO.getTitulo());
+					CONSTANTES.ARQUIVO_UNICO.getTitulo());
 			XMLEncoder encoder = new XMLEncoder(os);
 			encoder.writeObject(objeto);
 			encoder.close();
@@ -64,7 +64,7 @@ public class Persistencia {
 
 		try {
 
-			FileInputStream os = new FileInputStream(Constantes.ARQUIVO_UNICO.getTitulo());
+			FileInputStream os = new FileInputStream(CONSTANTES.ARQUIVO_UNICO.getTitulo());
 			XMLDecoder decoder = new XMLDecoder(os);
 			decoder.close();
 			Object result = decoder.readObject();

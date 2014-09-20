@@ -7,7 +7,7 @@ package br.com.H2Helper.modelos;
  * @version 1.0
  */
 public class Curso {
-
+	
 	private String identificadorCurso, nome;
 	
 	public Curso(){

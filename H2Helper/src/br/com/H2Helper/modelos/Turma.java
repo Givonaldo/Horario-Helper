@@ -8,7 +8,7 @@ package br.com.H2Helper.modelos;
 public class Turma {
 
 	private String idTurma, idCurso, identificadorProfessor, identificadorDisciplina,
-	identificadorSala, identificadorPeriodo, diaDaSemana;
+	identificadorSala, identificadorPeriodo, diaDaSemana, descricao;
 	
 	private int horaInicio, horaFim;
 	
@@ -23,6 +23,22 @@ public class Turma {
 	 */
 	public String getIdTurma() {
 		return idTurma;
+	}
+
+	/**
+	 * 
+	 * @return descricao
+	 */
+	public String getDescricao() {
+		return descricao;
+	}
+
+	/**
+	 * 
+	 * @param descricao
+	 */
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	/**
@@ -184,7 +200,7 @@ public class Turma {
 	 * @return String
 	 */
 	public String horario(){
-		return getDiaDaSemana()+": "+getHoraInicio()+" Ã s "+getHoraFim();
+		return getDiaDaSemana()+": "+getHoraInicio()+" às "+getHoraFim();
 	}
 	
 	@Override

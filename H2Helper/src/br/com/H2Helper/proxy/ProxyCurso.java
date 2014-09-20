@@ -2,6 +2,9 @@ package br.com.H2Helper.proxy;
 
 import br.com.H2Helper.dados.Dados;
 import br.com.H2Helper.dados.Persistencia;
+import br.com.H2Helper.exception.AtributoInvalidoException;
+import br.com.H2Helper.exception.CursoJaCadastradoException;
+import br.com.H2Helper.exception.CursoNaoCadastradoException;
 import br.com.H2Helper.exception.H2Exception;
 import br.com.H2Helper.gerenciador.Gerenciador;
 
@@ -52,9 +55,9 @@ public class ProxyCurso extends ProxyAbstrato {
 	public void addCurso(String identificadorCurso, String nome) throws H2Exception {
 		
 		if (identificadorCurso == null || nome == null || !verificaAtributo(identificadorCurso, nome)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (verificaExistencia(identificadorCurso)){
-			throw new H2Exception("Curso já cadastrado");
+			throw new CursoJaCadastradoException();
 		}else {
 			gerenciador.addCurso(identificadorCurso, nome);
 		}
@@ -73,9 +76,9 @@ public class ProxyCurso extends ProxyAbstrato {
 			throws H2Exception {
 		
 		if (identificador == null || novoValor == null || !verificaAtributo(identificador, novoValor)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(identificador)){
-			throw new H2Exception("Curso não cadastrado");
+			throw new CursoNaoCadastradoException();
 		}else {
 			gerenciador.alterarCurso(identificador, novoValor);
 		}
@@ -92,9 +95,9 @@ public class ProxyCurso extends ProxyAbstrato {
 	public void removeCurso(String identificador) throws H2Exception {
 		
 		if (identificador == null || !verificaNuloOuVazio(identificador)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(identificador)){
-			throw new H2Exception("Curso não cadastrado");
+			throw new CursoNaoCadastradoException();
 		}else {
 			gerenciador.removeCurso(identificador);
 		}
@@ -111,9 +114,9 @@ public class ProxyCurso extends ProxyAbstrato {
 	public String getCurso(String idCurso) throws H2Exception {
 		
 		if (idCurso == null || !verificaNuloOuVazio(idCurso)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(idCurso)){
-			throw new H2Exception("Curso não cadastrado");
+			throw new CursoNaoCadastradoException();
 		}else {
 			return gerenciador.getCurso(idCurso);
 		}

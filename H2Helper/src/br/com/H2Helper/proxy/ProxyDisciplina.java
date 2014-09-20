@@ -2,6 +2,9 @@ package br.com.H2Helper.proxy;
 
 import br.com.H2Helper.dados.Dados;
 import br.com.H2Helper.dados.Persistencia;
+import br.com.H2Helper.exception.AtributoInvalidoException;
+import br.com.H2Helper.exception.DisciplinaJaCadastradaException;
+import br.com.H2Helper.exception.DisciplinaNaoCadastradaException;
 import br.com.H2Helper.exception.H2Exception;
 import br.com.H2Helper.gerenciador.Gerenciador;
 
@@ -61,9 +64,9 @@ public class ProxyDisciplina extends ProxyAbstrato {
 		if (identificadorCurso == null || nomeDisciplina == null || cargaHoraria == 0 || identificadorDisciplina == null || 
 				identificadorperiodo == null || !verificaAtributo(identificadorDisciplina, nomeDisciplina, identificadorCurso, 
 						identificadorperiodo)) {
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		} else if (verificaExistencia(parametro)) {
-			throw new H2Exception("Disciplina já Cadastrada");
+			throw new DisciplinaJaCadastradaException();
 		} else {
 			gerenciador.addDisciplinaAoPeriodo(identificadorDisciplina,
 					nomeDisciplina, cargaHoraria, identificadorCurso,
@@ -89,9 +92,9 @@ public class ProxyDisciplina extends ProxyAbstrato {
 		if (idCurso == null || sigla == null || atributo == null || 
 				novoValor == null || !idCurso.matches(RECURSOS.VALIDA_SIGLA.getTitulo()) || !sigla.matches(RECURSOS.VALIDA_SIGLA.getTitulo())
 				|| !atributo.matches(RECURSOS.VALIDA_NOME.getTitulo())) {
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		} else if (!verificaExistencia(parametro)) {
-			throw new H2Exception("Disciplina não cadastrada");
+			throw new DisciplinaNaoCadastradaException();
 		} else {
 			gerenciador.alteraDisciplina(idCurso, sigla, atributo, novoValor);
 		}
@@ -112,9 +115,9 @@ public class ProxyDisciplina extends ProxyAbstrato {
 		String parametro = idCurso + " - " + idDisciplina;
 		if (idCurso == null || idDisciplina == null || !idCurso.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo()) || 
 				!idDisciplina.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(parametro)) {
-			throw new H2Exception("Disciplina não cadastrada");
+			throw new DisciplinaNaoCadastradaException();
 		} else {
 			gerenciador.removeDisciplina(idCurso, idDisciplina);
 		}
@@ -136,9 +139,9 @@ public class ProxyDisciplina extends ProxyAbstrato {
 		String parametro = idCurso + " - " + idDisciplina;
 		if (idCurso == null || idDisciplina == null || !idCurso.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo()) || 
 				!idDisciplina.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(parametro)) {
-			throw new H2Exception("Disciplina não cadastrada");
+			throw new DisciplinaNaoCadastradaException();
 		} else {
 			return gerenciador.getDisciplina(idCurso, idDisciplina);
 		}

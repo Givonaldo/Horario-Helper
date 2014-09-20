@@ -2,7 +2,10 @@ package br.com.H2Helper.proxy;
 
 import br.com.H2Helper.dados.Dados;
 import br.com.H2Helper.dados.Persistencia;
+import br.com.H2Helper.exception.AtributoInvalidoException;
 import br.com.H2Helper.exception.H2Exception;
+import br.com.H2Helper.exception.TurmaNaoEncontradaException;
+import br.com.H2Helper.exception.TurmaSemHorarioException;
 import br.com.H2Helper.gerenciador.GerenciadorDeHorarios;
 
 /**
@@ -57,11 +60,11 @@ public class ProxyHorario extends ProxyAbstrato {
 	public String alocaTurmaAoHorario(String idTurma, String diaDaSemana,
 			int horaInicio, int horafim) throws H2Exception {
 		
-		if (verificaAtributo(idTurma, diaDaSemana) || horaInicio < 0 || 
-				horafim < 0 || horafim - horaInicio < 0){
-			throw new H2Exception("Atributo Inválido");
+		if (!verificaAtributo(idTurma, diaDaSemana) || horaInicio < 0 || 
+				horafim < 0 || horaInicio - horafim > 0){
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(idTurma)){
-			throw new H2Exception("Turma não encontrada.");
+			throw new TurmaNaoEncontradaException();
 		}else {
 			return gerenciador.alocaTurmaAoHorario(idTurma, diaDaSemana, horaInicio, horafim);
 		}
@@ -84,7 +87,7 @@ public class ProxyHorario extends ProxyAbstrato {
 		
 		if (!verificaAtributo(idTurma, diaDaSemana) || horaInicio > 24 || horaInicio < 0 || 
 				horaFim > 24 || horaFim < 0 || horaFim - horaInicio < 0){
-			throw new H2Exception("Atributo Inválido");
+			throw new AtributoInvalidoException();
 		}else {
 			return gerenciador.desalocaTurmaDoHorario(idTurma, diaDaSemana, horaInicio, horaFim);
 		}
@@ -100,9 +103,9 @@ public class ProxyHorario extends ProxyAbstrato {
 	public String getHorario(String idTurma) throws H2Exception{
 		
 		if (idTurma.isEmpty()){
-			throw new H2Exception("Atributo Inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(idTurma)){
-			throw new H2Exception("Turma sem horário");
+			throw new TurmaSemHorarioException();
 		}else {
 			return gerenciador.getHorario(idTurma);
 		}
@@ -121,7 +124,7 @@ public class ProxyHorario extends ProxyAbstrato {
 	public String getTurmas(String diaDaSemana, int horaInicio, int horaFim)
 			throws H2Exception {
 		if (horaInicio <= 0 || horaFim < 0 || diaDaSemana.isEmpty()){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}
 		return gerenciador.getTurmas(diaDaSemana, horaInicio, horaFim);
 	}

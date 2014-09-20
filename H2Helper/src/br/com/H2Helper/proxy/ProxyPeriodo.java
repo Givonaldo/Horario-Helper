@@ -2,7 +2,10 @@ package br.com.H2Helper.proxy;
 
 import br.com.H2Helper.dados.Dados;
 import br.com.H2Helper.dados.Persistencia;
+import br.com.H2Helper.exception.AtributoInvalidoException;
 import br.com.H2Helper.exception.H2Exception;
+import br.com.H2Helper.exception.PeriodoJaCadastradoException;
+import br.com.H2Helper.exception.PeriodoNaoCadastradoException;
 import br.com.H2Helper.gerenciador.Gerenciador;
 
 /**
@@ -54,9 +57,9 @@ public class ProxyPeriodo extends ProxyAbstrato {
 		
 		String atributo = identificadorPeriodo +" - "+ idCurso;
 		if (!verificaAtributo(identificadorPeriodo, idCurso)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (verificaExistencia(atributo)){
-			throw new H2Exception("Periodo já Cadastrado");
+			throw new PeriodoJaCadastradoException();
 		}else {
 			gerenciador.addPeriodo(identificadorPeriodo, idCurso);
 		}
@@ -76,9 +79,9 @@ public class ProxyPeriodo extends ProxyAbstrato {
 		
 		String atributo = nomePeriodo +" - "+ idCurso;
 		if (!verificaAtributo(nomePeriodo, idCurso)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(atributo)){
-			throw new H2Exception("Periodo não Cadastrado");
+			throw new PeriodoNaoCadastradoException();
 		}else {
 			gerenciador.removePeriodo(idCurso, nomePeriodo);
 		}
@@ -95,9 +98,9 @@ public class ProxyPeriodo extends ProxyAbstrato {
 		
 		String atributo = idPeriodo +" - "+ idCurso;
 		if (!verificaAtributo(idPeriodo, idCurso)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(atributo)){
-			throw new H2Exception("Periodo não Cadastrado");
+			throw new PeriodoNaoCadastradoException();
 		}else{
 			return gerenciador.getPeriodo(idPeriodo, idCurso);
 		}

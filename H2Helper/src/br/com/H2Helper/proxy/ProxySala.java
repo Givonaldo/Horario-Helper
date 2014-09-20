@@ -2,7 +2,10 @@ package br.com.H2Helper.proxy;
 
 import br.com.H2Helper.dados.Dados;
 import br.com.H2Helper.dados.Persistencia;
+import br.com.H2Helper.exception.AtributoInvalidoException;
 import br.com.H2Helper.exception.H2Exception;
+import br.com.H2Helper.exception.SalaJaCadastradaException;
+import br.com.H2Helper.exception.SalaNaoCadastradaException;
 import br.com.H2Helper.gerenciador.Gerenciador;
 
 /**
@@ -49,9 +52,9 @@ public class ProxySala extends ProxyAbstrato {
 	public void addSala(String idSala, String bloco) throws H2Exception {
 		
 		if (!verificaAtributo(idSala, bloco)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (verificaExistencia(idSala)){
-			throw new H2Exception("Sala já cadastrada");
+			throw new SalaJaCadastradaException();
 		}else {
 			gerenciador.addSala(idSala, bloco);
 		}
@@ -67,9 +70,9 @@ public class ProxySala extends ProxyAbstrato {
 	public void alteraSala(String idSala, String novoBloco) throws H2Exception {
 		
 		if (!verificaAtributo(idSala, novoBloco)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(idSala)){
-			throw new H2Exception("Sala não cadastrada");
+			throw new SalaNaoCadastradaException();
 		}else {
 			gerenciador.alteraSala(idSala, novoBloco);
 		}
@@ -85,9 +88,9 @@ public class ProxySala extends ProxyAbstrato {
 	public String getSala(String idSala) throws H2Exception {
 		
 		if (!idSala.matches(RECURSOS.VALIDA_NOME_SALA.getTitulo())){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(idSala)) {
-			throw new H2Exception("Sala não cadastrada");
+			throw new SalaNaoCadastradaException();
 		}else {
 			return gerenciador.getSala(idSala);
 		}
@@ -102,9 +105,9 @@ public class ProxySala extends ProxyAbstrato {
 	public void removeSala(String idSala) throws H2Exception {
 		
 		if (idSala == null || !verificaNuloOuVazio(idSala)){
-			throw new H2Exception("Atributo inválido");
+			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(idSala)){
-			throw new H2Exception("Sala não cadastrada");
+			throw new SalaNaoCadastradaException();
 		}else {
 			gerenciador.removeSala(idSala);
 		}

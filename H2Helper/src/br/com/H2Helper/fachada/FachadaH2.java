@@ -35,16 +35,16 @@ public class FachadaH2 implements FachadaIF {
 	}
 
 	@Override
-	public void addProfessor(String idProfessor, String nome)
-			throws H2Exception {
+	public void addProfessor(String idProfessor, String nome) throws H2Exception {
+		
 		proxyProfessor = (ProxyProfessor) fabricaDeGerenciadores
 				.getObject(OPCOES_DE_OBJETOS.PROXY_PROFESSOR);
 		proxyProfessor.addProfessor(idProfessor, nome);
 	}
 
 	@Override
-	public void alteraProfessor(String idProfessor, String novoNome)
-			throws H2Exception {
+	public void alteraProfessor(String idProfessor, String novoNome) throws H2Exception {
+		
 		proxyProfessor = (ProxyProfessor) fabricaDeGerenciadores
 				.getObject(OPCOES_DE_OBJETOS.PROXY_PROFESSOR);
 		proxyProfessor.alteraProfessor(idProfessor, novoNome);
@@ -52,6 +52,7 @@ public class FachadaH2 implements FachadaIF {
 
 	@Override
 	public void removeProfessor(String matricula) throws H2Exception {
+		
 		proxyProfessor = (ProxyProfessor) fabricaDeGerenciadores
 				.getObject(OPCOES_DE_OBJETOS.PROXY_PROFESSOR);
 		proxyProfessor.removeProfessor(matricula);
@@ -59,6 +60,7 @@ public class FachadaH2 implements FachadaIF {
 
 	@Override
 	public String getProfessor(String identificador) throws H2Exception {
+		
 		proxyProfessor = (ProxyProfessor) fabricaDeGerenciadores
 				.getObject(OPCOES_DE_OBJETOS.PROXY_PROFESSOR);
 		return proxyProfessor.getProfessor(identificador);
@@ -68,50 +70,48 @@ public class FachadaH2 implements FachadaIF {
 	public void addDisciplinaAoPeriodo(String identificadorDisciplina,
 			String nomeDisciplina, int cargaHoraria, String identificadorCurso,
 			String identificadorperiodo) throws H2Exception {
+		
 		proxyDisciplina = (ProxyDisciplina) fabricaDeGerenciadores
 				.getObject(OPCOES_DE_OBJETOS.PROXY_DISCIPLINA);
 		proxyDisciplina.addDisciplinaAoPeriodo(identificadorDisciplina,
 				nomeDisciplina, cargaHoraria, identificadorCurso,
 				identificadorperiodo);
-
 	}
 
 	@Override
-	public void alteraDisciplina(String idCurso, String sigla, String atributo,
-			String novoValor) throws H2Exception {
+	public void alteraDisciplina(String idCurso, String sigla, String atributo, String novoValor) throws H2Exception {
+		
 		proxyDisciplina = (ProxyDisciplina) fabricaDeGerenciadores
 				.getObject(OPCOES_DE_OBJETOS.PROXY_DISCIPLINA);
 		proxyDisciplina.alteraDisciplina(idCurso, sigla, atributo, novoValor);
 	}
 
 	@Override
-	public void removeDisciplina(String idCurso, String idDisciplina)
-			throws H2Exception {
+	public void removeDisciplina(String idCurso, String idDisciplina) throws H2Exception {
+		
 		proxyDisciplina = (ProxyDisciplina) fabricaDeGerenciadores
 				.getObject(OPCOES_DE_OBJETOS.PROXY_DISCIPLINA);
 		proxyDisciplina.removeDisciplina(idCurso, idDisciplina);
 	}
 
 	@Override
-	public String getDisciplina(String idCurso, String idDisciplina)
-			throws H2Exception {
-		proxyDisciplina = (ProxyDisciplina) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_DISCIPLINA);
+	public String getDisciplina(String idCurso, String idDisciplina) throws H2Exception {
+		
+		proxyDisciplina = (ProxyDisciplina) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_DISCIPLINA);
 		return proxyDisciplina.getDisciplina(idCurso, idDisciplina);
 	}
 
 	@Override
 	public void addSala(String idSala, String bloco) throws H2Exception {
-		proxySala = (ProxySala) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_SALA);
+		
+		proxySala = (ProxySala) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_SALA);
 		proxySala.addSala(idSala, bloco);
 	}
 
 	@Override
 	public void alteraSala(String idSala, String novoBloco) throws H2Exception {
 
-		proxySala = (ProxySala) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_SALA);
+		proxySala = (ProxySala) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_SALA);
 		proxySala.alteraSala(idSala, novoBloco);
 
 	}
@@ -119,79 +119,67 @@ public class FachadaH2 implements FachadaIF {
 	@Override
 	public void removeSala(String idSala) throws H2Exception {
 
-		proxySala = (ProxySala) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_SALA);
+		proxySala = (ProxySala) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_SALA);
 		proxySala.removeSala(idSala);
 	}
 
 	@Override
-	public void addPeriodo(String identificadorPeriodo, String idCurso)
-			throws H2Exception {
+	public void addPeriodo(String identificadorPeriodo, String idCurso)	throws H2Exception {
 
-		proxyPeriodo = (ProxyPeriodo) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_PERIODO);
+		proxyPeriodo = (ProxyPeriodo) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_PERIODO);
 		proxyPeriodo.addPeriodo(identificadorPeriodo, idCurso);
 	}
 
 	@Override
-	public void removePeriodo(String idCurso, String nomePeriodo)
-			throws H2Exception {
-		proxyPeriodo = (ProxyPeriodo) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_PERIODO);
+	public void removePeriodo(String idCurso, String nomePeriodo) throws H2Exception {
+		
+		proxyPeriodo = (ProxyPeriodo) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_PERIODO);
 		proxyPeriodo.removePeriodo(idCurso, nomePeriodo);
 	}
 
 	@Override
-	public void addTurma(String idTurma, String idCurso,
-			String identificadorProfessor, String identificadorDisciplina,
-			String identificadorSala, String identificadorPeriodo)
-			throws H2Exception {
-		proxyTurma = (ProxyTurma) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_TURMA);
-		proxyTurma.addTurma(idTurma, idCurso, identificadorProfessor,
-				identificadorDisciplina, identificadorSala,
+	public void addTurma(String idTurma, String idCurso, String identificadorProfessor, String identificadorDisciplina,
+			String identificadorSala, String identificadorPeriodo) throws H2Exception {
+		
+		proxyTurma = (ProxyTurma) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_TURMA);
+		proxyTurma.addTurma(idTurma, idCurso, identificadorProfessor, identificadorDisciplina, identificadorSala,
 				identificadorPeriodo);
 
 	}
 
 	@Override
-	public void alteraTurma(String idTurma, String campo, String novoValor)
-			throws H2Exception {
-		proxyTurma = (ProxyTurma) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_TURMA);
+	public void alteraTurma(String idTurma, String campo, String novoValor)	throws H2Exception {
+		
+		proxyTurma = (ProxyTurma) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_TURMA);
 		proxyTurma.alterarTurma(idTurma, campo, novoValor);
 	}
 
 	@Override
 	public void removerTurma(String idTurma) throws H2Exception {
 
-		proxyTurma = (ProxyTurma) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_TURMA);
+		proxyTurma = (ProxyTurma) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_TURMA);
 		proxyTurma.removerTurma(idTurma);
 
 	}
 
 	@Override
 	public String getTurma(String idTurma) throws H2Exception {
-		proxyTurma = (ProxyTurma) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_TURMA);
+		
+		proxyTurma = (ProxyTurma) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_TURMA);
 		return proxyTurma.getTurma(idTurma);
 	}
 
 	@Override
-	public void addCurso(String identificadorCurso, String nome)
-			throws H2Exception {
+	public void addCurso(String identificadorCurso, String nome) throws H2Exception {
 
 		proxyCurso = (ProxyCurso) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_CURSO);
 		proxyCurso.addCurso(identificadorCurso, nome);
 	}
 
 	@Override
-	public void alterarCurso(String identificador, String novoValor)
-			throws H2Exception {
+	public void alterarCurso(String identificador, String novoValor) throws H2Exception {
 
-		proxyCurso = (ProxyCurso) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_CURSO);
+		proxyCurso = (ProxyCurso) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_CURSO);
 		proxyCurso.alterarCurso(identificador, novoValor);
 
 	}
@@ -199,31 +187,29 @@ public class FachadaH2 implements FachadaIF {
 	@Override
 	public void removeCurso(String identificador) throws H2Exception {
 
-		proxyCurso = (ProxyCurso) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_CURSO);
+		proxyCurso = (ProxyCurso) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_CURSO);
 		proxyCurso.removeCurso(identificador);
 
 	}
 
 	@Override
 	public String getCurso(String idCurso) throws H2Exception {
-		proxyCurso = (ProxyCurso) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_CURSO);
+		
+		proxyCurso = (ProxyCurso) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_CURSO);
 		return proxyCurso.getCurso(idCurso);
 	}
 
 	@Override
 	public String getSala(String idSala) throws H2Exception {
-		proxySala = (ProxySala) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_SALA);
+		
+		proxySala = (ProxySala) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_SALA);
 		return proxySala.getSala(idSala);
 	}
 
 	@Override
-	public String getPeriodo(String idPeriodo, String idCurso)
-			throws H2Exception {
-		proxyPeriodo = (ProxyPeriodo) fabricaDeGerenciadores
-				.getObject(OPCOES_DE_OBJETOS.PROXY_PERIODO);
+	public String getPeriodo(String idPeriodo, String idCurso) throws H2Exception {
+		
+		proxyPeriodo = (ProxyPeriodo) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_PERIODO);
 		return proxyPeriodo.getPeriodo(idPeriodo, idCurso);
 	}
 
@@ -251,8 +237,7 @@ public class FachadaH2 implements FachadaIF {
 	}
 
 	@Override
-	public String getTurmas(String diaDaSemana, int horaInicio, int horaFim)
-			throws H2Exception {
+	public String getTurmas(String diaDaSemana, int horaInicio, int horaFim) throws H2Exception {
 		
 		proxyHorario = (ProxyHorario) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_HORARIO);
 		return proxyHorario.getTurmas(diaDaSemana, horaInicio, horaFim);
@@ -263,6 +248,14 @@ public class FachadaH2 implements FachadaIF {
 		
 		proxyHorario = (ProxyHorario) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_HORARIO);
 		return proxyHorario.salvaHorario(nomeDoArquivo);
+	}
+
+	@Override
+	public void setDescricaoTurma(String idTurma, String descricao) throws H2Exception {
+		
+		proxyTurma = (ProxyTurma) fabricaDeGerenciadores.getObject(OPCOES_DE_OBJETOS.PROXY_TURMA);
+		proxyTurma.setDescricaoTurma(idTurma, descricao);
+		
 	}
 
 }

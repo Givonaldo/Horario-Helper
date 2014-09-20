@@ -2,7 +2,7 @@ package br.com.H2Helper.fachada;
 
 import br.com.H2Helper.exception.H2Exception;
 
-/**
+/** 
  * Esta interface representa as funcionalidades do sistema H2. O H2 é um sistema
  * que deve auxiliar os coordenadores no processo de alocação de horários e está
  * sendo desenvolvido pelos alunos do curso de ADS na disciplina de Padrões de
@@ -292,8 +292,21 @@ public interface FachadaIF {
 	 *             valor for nulo ou vazio, lançará a exceção com a mensagem
 	 *             "Atributo inválido".
 	 */
-
 	public void removerTurma(String idTurma) throws H2Exception;
+
+	/**
+	 * Metodo que servirá para destinguir a que grade do horario essa Turma 
+	 * irá fazer parte. Ex: Turma ADS_PP 2013.1 (primeiro periodo). Com isso 
+	 * será possivel criar o horario completo com todas as grades do curso 
+	 * passado no parâmetro.
+	 * 
+	 * @param descricao
+	 * 		Descrição do periodo, Ex: Primeiro Periodo, Segundo Periodo...
+	 * @throws H2Exception
+	 * 		Caso seja passado um atributo nulo ou vazio será lançada uma exceção 
+	 * 		com a mensagem Atributo inválido.
+	 */
+	public void setDescricaoTurma(String idTurma, String descricao) throws H2Exception ;
 
 	/**
 	 * Esse método deve retornar as informações da turma cujo id foi passado

@@ -33,8 +33,7 @@ public class CommandAdicionaDisciplinaAoPeriodo implements CommandIF {
 	@Override
 	public void execute(Object... atributos) {
 
-		String identificador = (String) atributos[3] + " - "
-				+ (String) atributos[0];
+		String identificador = (String)atributos[3]+" - "+(String)atributos[0];
 		disciplina.setIdentificadorDisciplina(identificador);
 		disciplina.setNomeDisciplina((String) atributos[1]);
 		disciplina.setCargaHoraria(((int) atributos[2]));
@@ -42,6 +41,7 @@ public class CommandAdicionaDisciplinaAoPeriodo implements CommandIF {
 		disciplina.setIdentificadorperiodo((String) atributos[4]);
 		
 		dados.getDisciplinas().put(identificador, disciplina);
+		
 		dados.persistencia(dados);
 	}
 

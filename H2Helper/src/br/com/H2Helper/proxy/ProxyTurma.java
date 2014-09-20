@@ -2,12 +2,20 @@ package br.com.H2Helper.proxy;
 
 import br.com.H2Helper.dados.Dados;
 import br.com.H2Helper.dados.Persistencia;
+import br.com.H2Helper.exception.AtributoInvalidoException;
+import br.com.H2Helper.exception.CursoNaoCadastradoException;
+import br.com.H2Helper.exception.DisciplinaNaoCadastradaException;
 import br.com.H2Helper.exception.H2Exception;
+import br.com.H2Helper.exception.PeriodoNaoCadastradoException;
+import br.com.H2Helper.exception.ProfessorNaoCadastradoException;
+import br.com.H2Helper.exception.SalaNaoCadastradaException;
+import br.com.H2Helper.exception.TurmaJaCadastradaException;
+import br.com.H2Helper.exception.TurmaNaoCadastradaException;
 import br.com.H2Helper.gerenciador.Gerenciador;
 
 /**
- * Classe onde foi usado o padr√£o de projeto Proxy e o 
- * singleton. A fim de fornecer uma camada de verifica√ß√£o 
+ * Classe onde foi usado o padr„o de projeto Proxy e o 
+ * singleton. A fim de fornecer uma camada de verificaÁ„o 
  * dos dados fornecidos pela fachada do sistema.
  * 
  * @author Gilvonaldo Alves da Silva Cavalcanti.
@@ -42,7 +50,7 @@ public class ProxyTurma extends ProxyAbstrato {
 	}
 
 	/**
-	 * Metodo que realiza as verifica√ß√µes dos dados passados no par√¢metro do mesmo.
+	 * Metodo que realiza as verificaÁıes dos dados passados no par‚metro do mesmo.
      *
 	 * @param idTurma
 	 * @param idCurso
@@ -61,19 +69,17 @@ public class ProxyTurma extends ProxyAbstrato {
 				identificadorDisciplina == null || identificadorSala == null || identificadorPeriodo == null || 
 				!verificaAtributo(idTurma, idCurso, identificadorProfessor,	identificadorDisciplina, identificadorSala,
 				identificadorPeriodo)) {
-			throw new H2Exception("Atributo inv·lido");
+			throw new AtributoInvalidoException();
 		} else if (verificaExistencia(idTurma)) {
-			throw new H2Exception("Turma j· cadastrada");
-		} else {
-			gerenciador.addTurma(idTurma, idCurso, identificadorProfessor,
-					identificadorDisciplina, identificadorSala,
+			throw new TurmaJaCadastradaException();
+		} else if (verificacaoDeExistenciaDosIdentificadores(idCurso, identificadorProfessor, identificadorDisciplina, identificadorSala, identificadorPeriodo)){
+			gerenciador.addTurma(idTurma, idCurso, identificadorProfessor, identificadorDisciplina, identificadorSala,
 					identificadorPeriodo);
-
 		}
 	}
 
 	/**
-	 * Metodo que realiza as verifica√ß√µes dos dados passados no par√¢metro do mesmo.
+	 * Metodo que realiza as verificaÁıes dos dados passados no par‚metro do mesmo.
 	 *  
 	 * @param idTurma
 	 * @param campo
@@ -84,16 +90,33 @@ public class ProxyTurma extends ProxyAbstrato {
 			throws H2Exception {
 
 		if (idTurma == null || campo == null || novoValor == null || !verificaAtributo(idTurma, campo, novoValor)) {
-			throw new H2Exception("Atributo inv·lido");
+			throw new AtributoInvalidoException();
 		} else if (!verificaExistencia(idTurma)) {
-			throw new H2Exception("Turma n„o cadastrada");
+			throw new TurmaNaoCadastradaException();
 		} else {
 			gerenciador.alteraTurma(idTurma, campo, novoValor);
 		}
 	}
 
+	
 	/**
-	 * Metodo que realiza as verifica√ß√µes dos dados passados no par√¢metro do mesmo.
+	 * 
+	 * @param descricao
+	 */
+	public void setDescricaoTurma(String idTurma, String descricao) throws H2Exception {
+		
+		if (descricao == null || !descricao.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo()) || 
+				idTurma == null || !idTurma.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())){
+			throw new AtributoInvalidoException();
+		}else if (!verificaExistencia(idTurma)){
+			throw new TurmaNaoCadastradaException();
+		}else {
+			gerenciador.setDescricaoTurma(idTurma, descricao);
+		}
+	}
+	
+	/**
+	 * Metodo que realiza as verificaÁıes dos dados passados no par‚metro do mesmo.
 	 * 
 	 * @param idTurma
 	 * @throws H2Exception
@@ -101,16 +124,16 @@ public class ProxyTurma extends ProxyAbstrato {
 	public void removerTurma(String idTurma) throws H2Exception {
 
 		if (idTurma == null || !verificaNuloOuVazio(idTurma)) {
-			throw new H2Exception("Atributo inv·lido");
+			throw new AtributoInvalidoException();
 		} else if (!verificaExistencia(idTurma)) {
-			throw new H2Exception("Turma n„o cadastrada");
+			throw new TurmaNaoCadastradaException();
 		} else {
 			gerenciador.removerTurma(idTurma);
 		}
 	}
 
 	/**
-	 * Metodo que realiza as verifica√ß√µes dos dados passados no par√¢metro do mesmo.
+	 * Metodo que realiza as verificaÁıes dos dados passados no par‚metro do mesmo.
 	 * 
 	 * @param idTurma
 	 * @return
@@ -118,15 +141,116 @@ public class ProxyTurma extends ProxyAbstrato {
 	 */
 	public String getTurma(String idTurma) throws H2Exception {
 
-		if (idTurma == null || !verificaNuloOuVazio(idTurma)) {
-			throw new H2Exception("Atributo inv·lido");
+		if (idTurma == null || idTurma.isEmpty()) {
+			throw new AtributoInvalidoException();
 		} else if (!verificaExistencia(idTurma)) {
-			throw new H2Exception("Turma n„o cadastrada");
+			throw new TurmaNaoCadastradaException();
 		} else {
 			return gerenciador.getTurma(idTurma);
 		}
 	}
+	
+	/**
+	 * 
+	 * @param idCurso
+	 * @param idProfessor
+	 * @param idDisciplina
+	 * @param idSala
+	 * @param idPeriodo
+	 * @return
+	 * @throws H2Exception
+	 */
+	public boolean verificacaoDeExistenciaDosIdentificadores(String idCurso, String idProfessor, String idDisciplina, String idSala,
+			String idPeriodo) throws H2Exception {
+		
+		if (!verificaExistenciaCurso(idCurso)){
+			throw new CursoNaoCadastradoException();
+		}else if (!verificaExistenciaProfessor(idProfessor)){
+			throw new ProfessorNaoCadastradoException();
+		}else if (!verificaExistenciaDisciplina(idDisciplina, idCurso)){
+			throw new DisciplinaNaoCadastradaException();
+		}else if (!verificaExistenciaSala(idSala)){
+			throw new SalaNaoCadastradaException();
+		}else if (!verificaExistenciaPeriodo(idPeriodo, idCurso)){
+			throw new PeriodoNaoCadastradoException();
+		}else {
+			return true;
+		}
+		 
+	}
+	
+	/**
+	 * 
+	 * @param parametro
+	 * @return
+	 */
+	public boolean verificaExistenciaCurso(String parametro) {
+		
+		if (dados.getCursos().containsKey(parametro)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
+	/**
+	 * 
+	 * @param parametro
+	 * @return
+	 */
+	public boolean verificaExistenciaProfessor(String parametro) {
+
+		if (dados.getProfessores().containsKey(parametro)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 
+	 * @param parametro
+	 * @return
+	 */
+	public boolean verificaExistenciaDisciplina(String identificadorDisciplina, String idCurso) {
+
+		String parametro = idCurso + " - " + identificadorDisciplina;
+		if (dados.getDisciplinas().containsKey(parametro)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param parametro
+	 * @return
+	 */
+	public boolean verificaExistenciaSala(String parametro) {
+		
+		if (dados.getSalas().containsKey(parametro)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param parametro
+	 * @return
+	 */
+	public boolean verificaExistenciaPeriodo(String idPeriodo, String idCurso) {
+		
+		String atributo = idPeriodo +" - "+ idCurso;
+		if (dados.getPeriodo().containsKey(atributo)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	@Override
 	public boolean verificaExistencia(String parametro) {
 
@@ -143,10 +267,8 @@ public class ProxyTurma extends ProxyAbstrato {
 		switch (atributo.length) {
 		case 3: {
 			if (atributo[0].matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())
-					&& atributo[1]
-							.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())
-					&& atributo[2]
-							.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())) {
+					&& atributo[1].matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())
+					&& atributo[2].matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())) {
 				return true;
 			} else {
 				return false;
@@ -154,16 +276,11 @@ public class ProxyTurma extends ProxyAbstrato {
 		}
 		case 6: {
 			if (atributo[0].matches(RECURSOS.VALIDA_SIGLA.getTitulo())
-					&& atributo[1]
-							.matches(RECURSOS.VALIDA_SIGLA.getTitulo())
-					&& atributo[2]
-							.matches(RECURSOS.VALIDA_MATRICULA.getTitulo())
-					&& atributo[3]
-							.matches(RECURSOS.VALIDA_SIGLA.getTitulo())
-					&& atributo[4]
-							.matches(RECURSOS.VALIDA_SIGLA.getTitulo())
-					&& atributo[5]
-							.matches(RECURSOS.VALIDA_SIGLA_PERIODO.getTitulo())) {
+					&& atributo[1].matches(RECURSOS.VALIDA_SIGLA.getTitulo())
+					&& atributo[2].matches(RECURSOS.VALIDA_MATRICULA.getTitulo())
+					&& atributo[3].matches(RECURSOS.VALIDA_SIGLA.getTitulo())
+					&& atributo[4].matches(RECURSOS.VALIDA_SIGLA.getTitulo())
+					&& atributo[5].matches(RECURSOS.VALIDA_SIGLA_PERIODO.getTitulo())) {
 				return true;
 			} else {
 				return false;
@@ -172,4 +289,6 @@ public class ProxyTurma extends ProxyAbstrato {
 		}
 		return false;
 	}
+	
+	
 }
