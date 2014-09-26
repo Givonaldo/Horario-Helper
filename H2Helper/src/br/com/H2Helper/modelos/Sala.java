@@ -32,7 +32,7 @@ public class Sala {
 	}
 
 	/**
-	 * Metodo que retorna o bloco ao qual essa sala est√° 
+	 * Metodo que retorna o bloco ao qual essa sala est· 
 	 * localizada.
 	 * 
 	 * @return bloco
@@ -42,10 +42,10 @@ public class Sala {
 	}
 
 	/**
-	 * Metodo que seta o bloco onde essa sala est√° localizada.
+	 * Metodo que seta o bloco onde essa sala est· localizada.
 	 * 
 	 * @param bloco
-	 * 		Letra do bloco onde a sala est√° localizada.
+	 * 		Letra do bloco onde a sala est· localizada.
 	 */
 	public void setBloco(String bloco) {
 		this.bloco = bloco;

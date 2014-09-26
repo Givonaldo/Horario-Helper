@@ -3,6 +3,7 @@ package br.com.H2Helper.proxy;
 import br.com.H2Helper.dados.Dados;
 import br.com.H2Helper.dados.Persistencia;
 import br.com.H2Helper.exception.AtributoInvalidoException;
+import br.com.H2Helper.exception.CursoNaoCadastradoException;
 import br.com.H2Helper.exception.H2Exception;
 import br.com.H2Helper.exception.PeriodoJaCadastradoException;
 import br.com.H2Helper.exception.PeriodoNaoCadastradoException;
@@ -59,10 +60,13 @@ public class ProxyPeriodo extends ProxyAbstrato {
 		if (!verificaAtributo(identificadorPeriodo, idCurso)){
 			throw new AtributoInvalidoException();
 		}else if (verificaExistencia(atributo)){
-			throw new PeriodoJaCadastradoException();
+			//throw new PeriodoJaCadastradoException();
+		}else if (!verificaExistenciaCurso(idCurso)) {
+			throw new CursoNaoCadastradoException();
 		}else {
 			gerenciador.addPeriodo(identificadorPeriodo, idCurso);
 		}
+		
 	}
 	
 	/**
@@ -112,6 +116,15 @@ public class ProxyPeriodo extends ProxyAbstrato {
 		if (dados.getPeriodo().containsKey(parametro)){
 			return true;
 		}else{
+			return false;
+		}
+	}
+	
+	public boolean verificaExistenciaCurso(String idCurso){
+		
+		if (dados.getCursos().containsKey(idCurso)){
+			return true;
+		}else {
 			return false;
 		}
 	}

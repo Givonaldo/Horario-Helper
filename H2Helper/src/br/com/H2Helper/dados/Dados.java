@@ -28,9 +28,7 @@ public class Dados {
 
 	private Persistencia persistencia;
 
-	public Dados() {
-
-	}
+	public Dados() {}
 
 	/**
 	 * Metodo que salva todas as alterações feitas no programa.

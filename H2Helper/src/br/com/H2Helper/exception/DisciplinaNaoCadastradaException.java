@@ -1,9 +1,12 @@
 package br.com.H2Helper.exception;
 
 /**
+ * Classe que representa uma Exception que será lançada 
+ * quando ouver a tentativa de acessar uma disciplina que 
+ * ainda não está cadastrada no sistema.
  * 
- * @author Gilvonaldo
- *
+ * @author Gilvonaldo Alves da Silva Cavalcanti
+ * @see H2Exception
  */
 public class DisciplinaNaoCadastradaException extends H2Exception {
 

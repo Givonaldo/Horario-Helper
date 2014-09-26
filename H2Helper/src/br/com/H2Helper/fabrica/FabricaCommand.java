@@ -70,5 +70,4 @@ public class FabricaCommand implements FabricaIF {
 		}
 		return null;
 	}
-
 }

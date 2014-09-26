@@ -25,9 +25,11 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
+ * Classe que gera um documento PDF, apartir dos dados cadastrados 
+ * no sistema.
  * 
  * @author Gilvonaldo Alves da Silva Cavalcanti.
- *
+ * @see ArvoreDeDiretorios
  */
 public class Relatorio {
 
@@ -42,7 +44,6 @@ public class Relatorio {
 
 		diasDaSemana = new ArrayList<>();
 		dados = new Dados();
-		tabela = new PdfPTable(5);
 		diasDaSemana.add(DIAS_DA_SEMANA.SEGUNDA_FEIRA);
 		diasDaSemana.add(DIAS_DA_SEMANA.TERCA_FEIRA);
 		diasDaSemana.add(DIAS_DA_SEMANA.QUARTA_FEIRA);
@@ -63,10 +64,9 @@ public class Relatorio {
 	 * @throws IOException
 	 * 			Caso o arquivo não tenha sido encontrado.
 	 */
-	public void createPdf(String filename, String opcoes, String periodo,
-			String descricao, String siglaCurso) throws IOException,
+	public void createPdf(String filename, String siglaCurso, String periodo) throws IOException,
 			DocumentException {
-
+		
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream(filename));
 		document.open();
@@ -75,14 +75,36 @@ public class Relatorio {
 		Paragraph paragrafo = new Paragraph("Instituto Federal de Educação Ciência e Tecnoliga PARAÍBA");
 		paragrafo.setAlignment(Element.ALIGN_CENTER);
 		document.add(paragrafo);
-		tabela(document, periodo, descricao, siglaCurso);
-		document.add(this.tabela);
+		
+		addDescricaoNaTabela(document, siglaCurso);
+		//tabela(document,  descricao, siglaCurso);
+
+		//document.add(this.tabela);
 		document.close();
 		JOptionPane.showMessageDialog(null, "PDF Gerado com sucesso.");
 		// Chamada do metodo que exibe o PDF.
-		exibirPDF(filename);
+		//exibirPDF(filename);
 	}
 
+	/**
+	 * Metodo que percorre todas as descrições dos Objetos Turmas, cadastrados 
+	 * no sistema, essa descrição servirá como uma Grade de Horário.
+	 * 
+	 */
+	public void addDescricaoNaTabela(Document doc, String siglaCurso){
+		
+		for (String idTurma : chaves) {
+			
+			try {
+				String descricao = dados.getTurmas().get(idTurma).getDescricao();
+				if (descricao != null){
+					
+					tabela(doc, descricao, siglaCurso);
+				}
+			}catch (Exception e){}
+		}
+	}
+	
 	/**
 	 * Metodo que cria a tabela de objetos e adiciona os objetos no arquivo PDF.
 	 *
@@ -90,43 +112,73 @@ public class Relatorio {
 	 * @throws DocumentException
 	 * 
 	 */
-	public void tabela(Document doc, String periodo, String descricao,
+	public void tabela(Document doc, String descricao,
 			String siglaCurso) throws DocumentException {
 
 		// Concatenação para a formação do nome da grade.
-		Paragraph paragrafo = new Paragraph("Horário - "+siglaCurso.toUpperCase()+" "+ periodo);
+		Paragraph paragrafo = new Paragraph("Horário - "+siglaCurso.toUpperCase()+" "+ descricao);
 		paragrafo.setAlignment(Element.ALIGN_CENTER);
 
 		doc.add(paragrafo);
 		Paragraph paragrafo1 = new Paragraph(" ");
 		doc.add(paragrafo1);
-		int cont = 0;
-		
+	
 		Paragraph paragrafo2 = new Paragraph(descricao.toUpperCase());
 		paragrafo2.setAlignment(Element.ALIGN_LEFT);
 		doc.add(paragrafo2);
 		Paragraph paragrafoVazio = new Paragraph(" ");
 		doc.add(paragrafoVazio);
 		
+		preencheTabela(descricao, doc);
 		
-		tabela.setWidthPercentage(500 / 5.23f);
-		tabela.setWidths(new int[] { 1, 1, 1, 1, 1 });
-		PdfPCell cell;
-		
-		cell = new PdfPCell(new Phrase("Segunda-Feira"));
-		cell.setColspan(cont);
-		tabela.addCell(cell);
-		tabela.addCell("Terça-Feira");
-		tabela.addCell("Quarta-Feira");
-		tabela.addCell("Quinta-Feira");
-		tabela.addCell("Sexta-Feira");
-
-		preencheTabela(descricao, tabela);
-		
+		doc.add(paragrafoVazio);
 		doc.add(this.tabela);
-		
 	}
 
+	/**
+	 * Metodo que preenche a tabela com os dias da semana correspondente ao
+	 * horario, e chama os metodos de preenchimento dos dias da semana.
+	 * 
+	 * @param descricao
+	 * 		String que representará a descrição de cada periodo.
+	 * @throws DocumentException
+	 * 		Caso a API ITextPdf não consiga criar um Arquivo do tipo Document. 
+	 */
+	public void preencheTabela(String descricao, Document doc) throws DocumentException{
+	
+		int cont = 0;
+		tabela = new PdfPTable(5);
+		tabela.setWidthPercentage(500 / 5.23f);
+		tabela.setWidths(new int[] { 1, 1, 1, 1, 1 });
+		PdfPCell cell1 = new PdfPCell(new Phrase("Segunda-Feira"));
+		cell1.setColspan(0);
+		tabela.addCell(cell1);
+		PdfPCell cell2 = new PdfPCell(new Phrase("Terça-Feira"));
+		cell2.setColspan(0);
+		tabela.addCell(cell2);
+		PdfPCell cell3 = new PdfPCell(new Phrase("Quarta-Feira"));
+		cell3.setColspan(0);
+		tabela.addCell(cell3);
+		PdfPCell cell4 = new PdfPCell(new Phrase("Quinta-Feira"));
+		cell4.setColspan(0);
+		tabela.addCell(cell4);
+		PdfPCell cell5 = new PdfPCell(new Phrase("Sexta-Feira"));
+		cell5.setColspan(0);
+		tabela.addCell(cell5);
+		
+		while(chaves.size() != 0){
+			cont++;
+			for (DIAS_DA_SEMANA dia : diasDaSemana) {
+				preencheDias(dia.getDescricao(), descricao, doc);
+			}
+			
+			if (cont == chaves.size())
+					break;
+			this.tabela = null;
+		}
+		
+	}
+	
 	/**
 	 * Metodo que realiza o preenchimento do horário referente ao dia passado no parâmetro
 	 *  do metodo.
@@ -137,41 +189,44 @@ public class Relatorio {
 	 * 		Tabela que representará a grade de horarios.
 	 * @param descricao
 	 * 		A descrição da turma, ex.: 1º Periodo... 
+	 * @throws DocumentException 
+	 * 		Caso a API ITextPdf não consiga criar um Arquivo do tipo Document.
 	 */
-	public void preencheDias(DIAS_DA_SEMANA dia, PdfPTable tabela, String descricao){
-		
+	public void preencheDias(String dia, String descricao, Document doc) throws DocumentException{
 		
 		for (String id : chaves) {
-			
-			if (dados.getTurmas().get(id).getDiaDaSemana().equals(dia) && 
-					dados.getTurmas().get(id).getDescricao().equals(descricao)){
+			try{
+			if (dados.getTurmas().get(id).getDiaDaSemana().equals(dia) && dados.getTurmas().get(id).getDescricao().equals(descricao)){
 				
-				tabela.addCell(dados.getDisciplinas().get(dados.getTurmas().get(id).getIdentificadorDisciplina()).getIdentificadorDisciplina() 
-						+" de "+dados.getTurmas().get(id).getHoraInicio()+" às "+dados.getTurmas().get(id).getHoraFim());
-				chaves.remove(id);
+				String identificador = dados.getTurmas().get(id).getIdentificadorDisciplina();		
+				PdfPCell celula = new PdfPCell(new Phrase(identificador+" de "+dados.getTurmas().get(id).getHoraInicio()+" às "+dados.getTurmas().get(id).getHoraFim()));
+				celula.setColspan(0);
+				tabela.addCell(celula);
+				chaves.remove(0);
+				break;
+				
+			}else if (dados.getTurmas().get(id).getDiaDaSemana() != dia || dados.getTurmas().get(id).getDescricao() != descricao){
+		
+				PdfPCell celula1 = new PdfPCell(new Phrase(" "));
+				celula1.setColspan(0);
+				tabela.addCell(celula1);
 				break;
 			}
-			
+			}catch (Exception e){}
 		}
 		
-	}
-	
-	public void preencheTabela(String descricao, PdfPTable tabela){
-		
-		while(chaves.size() != 0){
-			
-			for (DIAS_DA_SEMANA dia : diasDaSemana) {
-				preencheDias(dia, tabela, descricao);
-			}
-		}
+		doc.add(this.tabela);
+
 	}
 	
 	/**
 	 * Metodo que exibe o PDF atraves da biblioteca Acrobat do Java beans.
 	 *
 	 * @param filename 
+	 * 		URL + Nome do Arquivo que será exibido 
 	 */
 	public void exibirPDF(String filename) {
+		
 		try {
 
 			JFrame frame = new JFrame("Grade de Horários - IFPB");
@@ -196,26 +251,4 @@ public class Relatorio {
 		}
 	}
 	
-	
-	/**
-	public static void main(String[] args) {
-
-		// #====> TESTE <====# 
-		
-		Relatorio r = new Relatorio();
-		ArvoreDeDiretorios arvore = new ArvoreDeDiretorios(null, true);
-
-		try {
-
-			r.createPdf(arvore.getCaminhoSelecionado()+ System.getProperty("file.separator")
-				+ "Relatorio.pdf", "Primeiro Periodo", "2013.1","1º Periodo", "ADS");
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		} catch (DocumentException e) {
-			
-			e.printStackTrace();
-		}
-
-	}*/
 }

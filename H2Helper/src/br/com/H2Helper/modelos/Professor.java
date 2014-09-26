@@ -15,7 +15,7 @@ public class Professor {
 
 	/**
 	 * Metodo que retorna o identificador do professor
-	 * <b>(MatrÃ­cula)</b>.
+	 * <b>(Matrícula)</b>.
 	 * 
 	 * @return idProfessor
 	 */

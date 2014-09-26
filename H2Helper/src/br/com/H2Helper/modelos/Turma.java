@@ -53,7 +53,7 @@ public class Turma {
 
 	/**
 	 * Metodo que retorna o identificador do curso ao qual essa turma 
-	 * est√° associada.
+	 * est· associada.
 	 * 
 	 * @return idCurso
 	 */

@@ -67,8 +67,8 @@ public class ProxyTurma extends ProxyAbstrato {
 
 		if (idTurma == null || idCurso == null || identificadorProfessor == null || 
 				identificadorDisciplina == null || identificadorSala == null || identificadorPeriodo == null || 
-				!verificaAtributo(idTurma, idCurso, identificadorProfessor,	identificadorDisciplina, identificadorSala,
-				identificadorPeriodo)) {
+				idTurma.equals("") || idCurso.equals("") || identificadorProfessor.equals("") || 
+				identificadorDisciplina.equals("") || identificadorSala.equals("") || identificadorPeriodo.equals("")) {
 			throw new AtributoInvalidoException();
 		} else if (verificaExistencia(idTurma)) {
 			throw new TurmaJaCadastradaException();
@@ -105,8 +105,7 @@ public class ProxyTurma extends ProxyAbstrato {
 	 */
 	public void setDescricaoTurma(String idTurma, String descricao) throws H2Exception {
 		
-		if (descricao == null || !descricao.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo()) || 
-				idTurma == null || !idTurma.matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())){
+		if (descricao == null || idTurma == null){
 			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(idTurma)){
 			throw new TurmaNaoCadastradaException();

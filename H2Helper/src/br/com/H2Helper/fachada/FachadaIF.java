@@ -1,5 +1,9 @@
 package br.com.H2Helper.fachada;
 
+import java.io.IOException;
+
+import com.itextpdf.text.DocumentException;
+
 import br.com.H2Helper.exception.H2Exception;
 
 /** 
@@ -505,5 +509,5 @@ public interface FachadaIF {
 	 *         motivo (não há padrão para as mensagens de erro).
 	 * 
 	 */
-	public String salvaHorario(String nomeDoArquivo);
+	public String salvaHorario(String nomeDoArquivo) throws IOException, DocumentException;
 }

@@ -56,9 +56,11 @@ public class ProxyCurso extends ProxyAbstrato {
 		
 		if (identificadorCurso == null || nome == null || !verificaAtributo(identificadorCurso, nome)){
 			throw new AtributoInvalidoException();
-		}else if (verificaExistencia(identificadorCurso)){
-			throw new CursoJaCadastradoException();
-		}else {
+		}
+	//	if (verificaExistencia(identificadorCurso)){
+	//		throw new CursoJaCadastradoException();
+	//	}
+		else {
 			gerenciador.addCurso(identificadorCurso, nome);
 		}
 	}

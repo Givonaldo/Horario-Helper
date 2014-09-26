@@ -1,9 +1,11 @@
 package br.com.H2Helper.exception;
 
 /**
+ * Excetion que será lançada quando os dados passados no 
+ * parâmetro for inválido.
  * 
- * @author Gilvonaldo
- *
+ * @author Gilvonaldo Alves da Silva Cavalcanti
+ * @see H2Exception
  */
 public class AtributoInvalidoException extends H2Exception {
 

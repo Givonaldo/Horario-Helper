@@ -280,7 +280,7 @@ public class Gerenciador {
 	
 	/**
 	 * Metodo que delega a responsabilidade de alteração de uma 
-	 * turma para um comando de alteração de turmas <b>(CommandAlteraTurma)</b>. 
+	 * turma para um comando de alteração de turmas <b>(CommandAlteraTurma)</b>.
 	 * @param idTurma
 	 * 		Identificador da turma a ser alterada.
 	 * @param campo

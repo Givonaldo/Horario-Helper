@@ -1,9 +1,11 @@
 package br.com.H2Helper.exception;
 
 /**
+ * Exception que será lançada quando ocorrer uma tentativa de 
+ * cadastramento de um curso que já foi cadastrado anteriormente.
  * 
- * @author Gilvonaldo
- *
+ * @author Gilvonaldo Alves da Silva Cavalcanti
+ * @see H2Exception
  */
 public class CursoJaCadastradoException extends H2Exception {
 

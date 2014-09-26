@@ -5,6 +5,7 @@ import br.com.H2Helper.dados.Persistencia;
 import br.com.H2Helper.exception.AtributoInvalidoException;
 import br.com.H2Helper.exception.H2Exception;
 import br.com.H2Helper.exception.SalaJaCadastradaException;
+import br.com.H2Helper.exception.SalaNaoAlteradaException;
 import br.com.H2Helper.exception.SalaNaoCadastradaException;
 import br.com.H2Helper.gerenciador.Gerenciador;
 
@@ -53,9 +54,11 @@ public class ProxySala extends ProxyAbstrato {
 		
 		if (!verificaAtributo(idSala, bloco)){
 			throw new AtributoInvalidoException();
-		}else if (verificaExistencia(idSala)){
-			throw new SalaJaCadastradaException();
-		}else {
+		}
+		//if (verificaExistencia(idSala)){
+			//throw new SalaJaCadastradaException();
+		//}
+		else {
 			gerenciador.addSala(idSala, bloco);
 		}
 	}
@@ -69,8 +72,8 @@ public class ProxySala extends ProxyAbstrato {
 	 */
 	public void alteraSala(String idSala, String novoBloco) throws H2Exception {
 		
-		if (!verificaAtributo(idSala, novoBloco)){
-			throw new AtributoInvalidoException();
+		if (idSala == null || idSala.equals("") || novoBloco == null || novoBloco.equals("")){
+			throw new SalaNaoAlteradaException();
 		}else if (!verificaExistencia(idSala)){
 			throw new SalaNaoCadastradaException();
 		}else {
@@ -87,7 +90,7 @@ public class ProxySala extends ProxyAbstrato {
 	 */
 	public String getSala(String idSala) throws H2Exception {
 		
-		if (!idSala.matches(RECURSOS.VALIDA_NOME_SALA.getTitulo())){
+		if (idSala == null || idSala.equals("")){
 			throw new AtributoInvalidoException();
 		}else if (!verificaExistencia(idSala)) {
 			throw new SalaNaoCadastradaException();
@@ -126,8 +129,8 @@ public class ProxySala extends ProxyAbstrato {
 	@Override
 	public boolean verificaAtributo(String... atributo) {
 		
-		if (atributo[0] != null && atributo[1] != null & atributo[0].matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo()) && 
-				atributo[1].matches(RECURSOS.VALIDA_ATRIBUTO.getTitulo())){
+		if (atributo[0] != null && atributo[1] != null && !atributo[0].equals("") &&
+				!atributo[1].equals("")){
 			return true;
 		}else {
 			return false;

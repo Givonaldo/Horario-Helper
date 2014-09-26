@@ -130,7 +130,7 @@ public class ProxyDisciplina extends ProxyAbstrato {
 	 * 
 	 * @param idCurso
 	 * @param idDisciplina
-	 * @return
+	 * @return toString de Disciplina.
 	 * @throws H2Exception
 	 */
 	public String getDisciplina(String idCurso, String idDisciplina)

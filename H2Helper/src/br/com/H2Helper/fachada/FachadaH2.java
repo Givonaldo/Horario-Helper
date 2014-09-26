@@ -1,5 +1,9 @@
 package br.com.H2Helper.fachada;
 
+import java.io.IOException;
+
+import com.itextpdf.text.DocumentException;
+
 import br.com.H2Helper.exception.H2Exception;
 import br.com.H2Helper.fabrica.FabricaProxy;
 import br.com.H2Helper.fabrica.OPCOES_DE_OBJETOS;

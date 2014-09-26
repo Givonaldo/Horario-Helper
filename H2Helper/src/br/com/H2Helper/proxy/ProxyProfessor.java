@@ -59,9 +59,11 @@ public class ProxyProfessor extends ProxyAbstrato {
 
 		if (idProfessor == null || nome == null || !verificaAtributo(idProfessor, nome)) {
 			throw new AtributoInvalidoException();
-		} else if (verificaExistencia(idProfessor)) {
-			throw new ProfessorJaCadastradoException();
-		} else {
+		} 
+		//if (verificaExistencia(idProfessor)){
+			//throw new ProfessorJaCadastradoException();
+		//}
+		else{
 			gerenciador.addProfessor(idProfessor, nome);
 		}
 	}
@@ -70,8 +72,11 @@ public class ProxyProfessor extends ProxyAbstrato {
 	 * Metodo que realiza as verificações dos dados.
 	 * 
 	 * @param idProfessor
+	 * 			Identificador do professor.
 	 * @param novoNome
+	 * 			Novo nome do professor.
 	 * @throws H2Exception
+	 * 			Caso o parâmetro seja nulo ou inválido.
 	 */
 	public void alteraProfessor(String idProfessor, String novoNome)
 			throws H2Exception {
@@ -90,6 +95,7 @@ public class ProxyProfessor extends ProxyAbstrato {
 	 * Metodo que realiza as verificações dos dados.
 	 * 
 	 * @param matricula
+	 * 		Representa um identificador unico para o professor.
 	 * @throws H2Exception
 	 */
 	public void removeProfessor(String matricula) throws H2Exception {
@@ -107,7 +113,8 @@ public class ProxyProfessor extends ProxyAbstrato {
 	 * Metodo que realiza as verificações dos dados.
 	 *	
 	 * @param identificador
-	 * @return
+	 * 		Identificador do professor.
+	 * @return toString de professor 
 	 * @throws H2Exception
 	 */
 	public String getProfessor(String identificador) throws H2Exception {

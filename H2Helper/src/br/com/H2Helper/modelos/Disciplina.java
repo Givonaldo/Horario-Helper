@@ -114,7 +114,6 @@ public class Disciplina {
 
 	@Override
 	public String toString() {
-		return getIdentificadorDisciplina()+" - "+getNomeDisciplina()+" - "+getIdentificadorperiodo()+" - "+
-				getCargaHoraria();
+		return getIdentificadorDisciplina()+" - "+getNomeDisciplina();
 	}
 }

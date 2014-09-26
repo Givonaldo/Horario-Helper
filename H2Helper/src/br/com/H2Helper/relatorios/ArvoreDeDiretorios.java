@@ -3,8 +3,9 @@ package br.com.H2Helper.relatorios;
 import java.io.File;
 import java.util.Iterator;
 import java.util.Vector;
-
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -16,14 +17,16 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.JButton;
-
+import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * 
- * @author Gilvonaldo
- *
+ * Classe que representa uma Ávore de diretórios com opções de caminhos
+ * para o armazenamento do relatório.
+ *  
+ * @author Gilvonaldo Alves da Silva Cavalcanti.
+ * @version 1.0
  */
 public class ArvoreDeDiretorios extends JDialog {
 
@@ -32,7 +35,9 @@ public class ArvoreDeDiretorios extends JDialog {
 	private SistemaDeModelo1 fileSystemModel;
 	private JTextArea fileDetailsTextArea = new JTextArea();
 	private String caminhoSelecionado, arquivo;
-
+	private String caminhoImg = (System.getProperty("user.dir")+System.getProperty("file.separator")+"img"+System.getProperty("file.separator"));
+	private String caminho = System.getProperty("user.home")+System.getProperty("file.separator");
+	
 	public ArvoreDeDiretorios(java.awt.Frame parent, boolean modal) {
 
 		super(parent, modal);
@@ -40,15 +45,20 @@ public class ArvoreDeDiretorios extends JDialog {
 		setComponentes();
 	}
 
+	/**
+	 * Metodo que adiciona todos os componentes da árvore de 
+	 * diretórios.
+	 * 
+	 */
 	public void setComponentes() {
 
-		// retorna uma String com o caminho de todos os arquivos até a
-		// raiz do sistema.
-		String caminho = System.getProperty("user.home")+System.getProperty("file.separator");
-
 		fileDetailsTextArea.setEditable(true);
-		fileDetailsTextArea.setSize(200, 600);
-
+		fileDetailsTextArea.setLayout(new GridBagLayout());
+		fileDetailsTextArea.setSize(200, 330);
+		ImageIcon imagem = new ImageIcon(caminhoImg + "download.jpg");
+		JLabel label = new JLabel("");
+		label.setIcon(imagem);
+		fileDetailsTextArea.add(label);
 		fileSystemModel = new SistemaDeModelo1(new File(caminho));
 		fileTree = new JTree(fileSystemModel);
 		fileTree.setEditable(true);
@@ -60,11 +70,10 @@ public class ArvoreDeDiretorios extends JDialog {
 		});
 		getContentPane().setLayout(null);
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,true, new JScrollPane(fileTree), new JScrollPane(fileDetailsTextArea));
-		
+		splitPane.setDividerLocation(260);
 		splitPane.setBounds(0, 0, 600, 400);
 		splitPane.setOneTouchExpandable(true);
 		getContentPane().add(splitPane);
-
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(471, 412, 117, 25);
 		btnCancelar.addActionListener(new ActionListener() {
@@ -81,18 +90,27 @@ public class ArvoreDeDiretorios extends JDialog {
 
 				setCaminhoSelecionado(getArquivo());
 				dispose();
-
 			}
 		});
 		getContentPane().add(btnOk);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(630, 480);
 		setLocationRelativeTo(null);
-		setVisible(true);
-
+		
 	}
 
+	/**
+	 * Metodo que imprime todos os detalhes do diretorio 
+	 * selecionado.
+	 * 
+	 * @param file
+	 * 		URL do diretório que foi selecionado.
+	 * @return String
+	 * 		uma String com todos os detalhes do caminho 
+	 * 		escolhido. 
+	 */
 	private String getFileDetails(File file) {
+		
 		if (file == null)
 			return "";
 
@@ -104,34 +122,64 @@ public class ArvoreDeDiretorios extends JDialog {
 		return buffer.toString();
 	}
 
+	/**
+	 * 
+	 * @param arquivo
+	 */
 	public void setArquivo(String arquivo) {
 		this.arquivo = arquivo;
 	}
 
+	/**
+	 * 
+	 * @return arquivo
+	 */
 	public String getArquivo() {
 		return arquivo;
 	}
 
+	/**
+	 * 
+	 * @param caminhoSelecionado
+	 */
 	public void setCaminhoSelecionado(String caminhoSelecionado) {
 		this.caminhoSelecionado = caminhoSelecionado;
 	}
 
+	/**
+	 * 
+	 * @return caminhoSelecionado
+	 */
 	public String getCaminhoSelecionado() {
 		return caminhoSelecionado+System.getProperty("file.separator");
 	}
 
 }
 
-
+/**
+ * Classe interna que representará um modelo de Diretórios 
+ * que será adicionado em um Vector e exibido como opção 
+ * de escolha para o usuário para caminho de relatórios.
+ * 
+ * @author Gilvonaldo Alves da Silva Cavalcanti.
+ *  @version 1.0
+ */
 class SistemaDeModelo1 implements TreeModel {
 
 	private File raiz;
-	private Vector ouvinte = new Vector();
+	private Vector<TreeModelListener> ouvinte = new Vector<TreeModelListener>();
 
+	/**
+	 * 
+	 * @param rootDirectory
+	 */
 	public SistemaDeModelo1(File rootDirectory) {
 		raiz = rootDirectory;
 	}
 
+	/**
+	 * 
+	 */
 	public Object getRoot() {
 		return raiz;
 	}
@@ -201,7 +249,8 @@ class SistemaDeModelo1 implements TreeModel {
 	}
 
 	/**
-	 * 
+	 * Metodo que realiza a adição de todos os caminho em um vetor 
+	 * enquanto ouver proximo "filho" de diretorios para adicionar. 
 	 * @param parentPath
 	 * @param indices
 	 * @param children
@@ -211,7 +260,7 @@ class SistemaDeModelo1 implements TreeModel {
 
 		TreeModelEvent event = new TreeModelEvent(this, parentPath, indices,
 				children);
-		Iterator iterator = ouvinte.iterator();
+		Iterator<TreeModelListener> iterator = ouvinte.iterator();
 		TreeModelListener listener = null;
 		while (iterator.hasNext()) {
 			listener = (TreeModelListener) iterator.next();
@@ -234,9 +283,9 @@ class SistemaDeModelo1 implements TreeModel {
 	}
 
 	/**
+	 * Super classe que representará a Arvore de diretórios.
 	 * 
-	 * @author Gilvonaldo
-	 *
+	 * @author Gilvonaldo Alves da Silva Cavalcanti.
 	 */
 	private class Arvore extends File {
 		

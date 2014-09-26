@@ -1,9 +1,12 @@
 package br.com.H2Helper.exception;
 
 /**
+ * Classe que representa uma Exception que será lançada quando 
+ * ouver uma tentativa de acesso a um objeto professor que não 
+ * existe no Sistema. 
  * 
- * @author Gilvonaldo
- *
+ * @author Gilvonaldo Alves da Silva Cavalcanti.
+ * @see H2Exception
  */
 public class ProfessorNaoCadastradoException extends H2Exception {
 

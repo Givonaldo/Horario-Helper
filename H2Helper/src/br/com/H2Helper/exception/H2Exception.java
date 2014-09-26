@@ -2,7 +2,7 @@ package br.com.H2Helper.exception;
 
 /**
  * Classe que representa a super classe de todas as 
- * exceção lançadas pela fachada do sistema.
+ * exceção lançadas pela fachada do sistema <b>H2Helper</b>.
  * 
  * @author Gilvonaldo Alves da Silva Cavalcanti.
  * @version 1.0

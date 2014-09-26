@@ -1,9 +1,11 @@
 package br.com.H2Helper.exception;
 
 /**
+ * Exception que será lançada quando tiver a ocorrencia de 
+ * acesso a um curso que não está cadastrado no sistema.
  * 
- * @author Gilvonaldo
- *
+ * @author Gilvonaldo Alves da Silva Cavalcanti
+ * @see H2Exception
  */
 public class CursoNaoCadastradoException extends H2Exception {
 

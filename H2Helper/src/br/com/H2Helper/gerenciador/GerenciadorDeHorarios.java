@@ -1,7 +1,8 @@
 package br.com.H2Helper.gerenciador;
 
+import java.io.IOException;
 import java.util.Set;
-
+import com.itextpdf.text.DocumentException;
 import br.com.H2Helper.commands.CommandIF;
 import br.com.H2Helper.commands.commandHorario.CommandAlocaTurmaAoHorario;
 import br.com.H2Helper.commands.commandTurma.CommandRemoveTurma;
@@ -10,6 +11,8 @@ import br.com.H2Helper.dados.Persistencia;
 import br.com.H2Helper.fabrica.FabricaCommand;
 import br.com.H2Helper.fabrica.FabricaIF;
 import br.com.H2Helper.fabrica.OPCOES_DE_OBJETOS;
+import br.com.H2Helper.relatorios.ArvoreDeDiretorios;
+import br.com.H2Helper.relatorios.Relatorio;
 
 /**
  * Classe que realiza a manipulação e gerenciamento de todos
@@ -28,11 +31,14 @@ public class GerenciadorDeHorarios {
 	private Persistencia persistencia;
 	private FabricaIF fabrica = new FabricaCommand();
 	private CommandAlocaTurmaAoHorario command;
-	private Set<String> chaves;
+	private Set<String> chavesDeTurmas;
 	private String descricaoDoChoqueDeHorario = "Choque com: ";
 	private int quantidadeDeChoques = 0;
 	private String turmasAlocadas = "Turmas Alocadas: ";
 	private CommandIF commandRemoveTurmas;
+	private Relatorio relatorio;
+	private ArvoreDeDiretorios arvore;
+	//private ArrayList<String> chavesDePeriodos;
 	
 	public GerenciadorDeHorarios() {
 
@@ -40,9 +46,12 @@ public class GerenciadorDeHorarios {
 		dados = (Dados) persistencia.load();
 		command = (CommandAlocaTurmaAoHorario) fabrica.getObject(OPCOES_DE_OBJETOS.COMMAND_ALOCA_TURMA);
 		commandRemoveTurmas = (CommandRemoveTurma) fabrica.getObject(OPCOES_DE_OBJETOS.COMMAND_REMOVE_TURMA);
-		chaves = dados.getTurmas().keySet();
+		chavesDeTurmas = dados.getTurmas().keySet();
+		this.relatorio = new Relatorio();
+		arvore = new ArvoreDeDiretorios(null, true);
+		//chavesDePeriodos = new ArrayList<>();
 	}
-
+	
 	/**
 	 * Metodo que realiza a alocação de turma.
 	 * 
@@ -77,7 +86,7 @@ public class GerenciadorDeHorarios {
 	public String desalocaTurmaDoHorario(String idTurma, String diaDaSemana,
 			int horaInicio, int horaFim) {
 
-		for (String id : chaves) {
+		for (String id : chavesDeTurmas) {
 		
 			verificaChoqueComProfessor(id, idTurma, horaInicio, horaFim);
 			verificaChoqueComSala(id, idTurma, horaInicio, horaFim);
@@ -115,7 +124,8 @@ public class GerenciadorDeHorarios {
 	 */
 	public String getTurmas(String diaDaSemana, int horaInicio, int horaFim) {
 
-		for (String chave : chaves) {
+		for (String chave : chavesDeTurmas) {
+			System.out.println("Entrou em todas as chaves de turmas");
 			try{
 
 				if (dados.getTurmas().get(chave).getDiaDaSemana().equals(diaDaSemana)){
@@ -140,7 +150,7 @@ public class GerenciadorDeHorarios {
 	 */
 	public void verificaAlocacao(String idTurma, String diaDaSemana, int horaInicio, int horaFim) {
 
-		for (String id : chaves) {
+		for (String id : chavesDeTurmas) {
 			try{
 				if (dados.getTurmas().get(id).getDiaDaSemana().equals(diaDaSemana)) {
 	
@@ -206,6 +216,44 @@ public class GerenciadorDeHorarios {
 	 */
 	public String getTurmasAlocadas() {
 		return turmasAlocadas;
+	}
+
+	/**
+	 * Metodo que preenche o ArrayList de Descrição, que corresponde 
+	 * a que periodo corresponde determinada turma.
+	 */
+	//public void preencheDescricaoDasTurmas(){
+		
+		//for (String descricao : chavesDeTurmas){
+	// 	chavesDePeriodos.add(dados.getTurmas().get(descricao).getDescricao());
+		//}
+	//}
+	
+	/**
+	 * 
+	 * @param nomeDoArquivo
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
+	public String salvaHorario(String nomeDoArquivo) {
+		
+		arvore.setVisible(true);
+		for (String periodo : chavesDeTurmas){
+			System.out.println("Entrou no salvarHorario");
+			try {
+				relatorio.createPdf(arvore.getCaminhoSelecionado()+nomeDoArquivo+".pdf", dados.getTurmas().get(periodo).getIdCurso(),
+						dados.getTurmas().get(periodo).getIdentificadorPeriodo());
+				return nomeDoArquivo+" foi criado com sucesso";
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		return "O sistema não pode criar o Arquivo";
+		
 	}
 	
 }

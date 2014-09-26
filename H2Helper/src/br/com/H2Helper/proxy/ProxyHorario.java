@@ -1,5 +1,9 @@
 package br.com.H2Helper.proxy;
 
+import java.io.IOException;
+
+import com.itextpdf.text.DocumentException;
+
 import br.com.H2Helper.dados.Dados;
 import br.com.H2Helper.dados.Persistencia;
 import br.com.H2Helper.exception.AtributoInvalidoException;
@@ -156,10 +160,19 @@ public class ProxyHorario extends ProxyAbstrato {
 	 * 
 	 * @param nomeDoArquivo
 	 * @return 
+	 * @throws DocumentException 
+	 * @throws IOException
 	 * @throws H2Exception
 	 */
 	public String salvaHorario(String nomeDoArquivo) {
 		
+		if (nomeDoArquivo.isEmpty()){
+			
+		}else{
+			
+			gerenciador.salvaHorario(nomeDoArquivo);
+			return nomeDoArquivo+" foi criado com sucesso!";
+		}
 		return null;
 	}
 
