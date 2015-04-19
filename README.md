@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Givonaldo/Horario-Helper.svg)](https://travis-ci.org/Givonaldo/Horario-Helper)
+
 Horario-Helper
 ==============
 
